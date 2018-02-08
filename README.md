@@ -1,6 +1,6 @@
 "# demo"
 
-"# npm install -g gulp"
-"# npm install semantic-ui --save"
-"# cd semantic/"
-"# gulp build"
+# npm install -g gulp <br />
+# npm install semantic-ui --save <br />
+# cd semantic/ <br />
+# gulp build <br />
