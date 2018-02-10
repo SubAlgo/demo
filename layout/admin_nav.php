@@ -1,6 +1,7 @@
 <div class="ui menu">
-    <a class="item">จัดการผู้ใช้</a>
-    <a class="item">จัดการโครงการ/รายการ</a>
+    <a href="admin.php" class="item"><b>หน้าหลัก admin</b></a>
+    <a href="usermanage.php" class="item"><b>จัดการผู้ใช้</b></a>
+    <a class="item"><b>จัดการโครงการ/รายการ</b></a>
     <div class="right menu">
 
       <div class="item">
@@ -13,7 +14,7 @@
           </div>
 
           <div >
-              <a href="//<?php echo $path; ?>/logout.php" class="ui button negative">Logout</a>
+              <a href="//<?php echo $path; ?>/logout.php" class="ui button negative">ออกจากระบบ</a>
           </div>
       </div>
     </div>

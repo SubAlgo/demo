@@ -1,21 +1,20 @@
 <?php
-/*
-$database_server = 'localhost';
-$database_user = 'root';
-$database_password = '';
-$database_name = 'pj_army';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = 'pj_army';
-*/
+/* ------- DATABASE CONFIG -------
+    ---------------------------------*/
+    $db_server      = 'localhost';
+    $db_user        = 'root';
+    $db_password    = '';
+    $db_name        = 'project_army';
 
-$conn = new mysqli($database_server, $database_user, $database_password, $database_name);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
-mysqli_set_charset($conn, "utf8");
-    
+
+ /* --------- DB Connect ---------
+    -------------------------------*/
+    $conn = new mysqli($db_server, $db_user, $db_password, $db_name);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    } 
+    mysqli_set_charset($conn, "utf8");
 ?>
+    

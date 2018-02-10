@@ -117,7 +117,7 @@
 
 
                             <div class="field">
-                                <input type="submit" name="submit" value="LOGIN"  class="ui fluid large teal submit button"> 
+                                <input type="submit" name="submit" value="เข้าสู่ระบบ"  class="ui fluid large teal submit button"> 
                             </div>
 
                         </div>
