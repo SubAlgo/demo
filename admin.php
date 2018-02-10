@@ -26,19 +26,11 @@
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
-        
-    ?>
-    <?php
         $alluser = countAlluser($conn);
         $adminuser = countUser($conn, 1);
         $other_user = countUser($conn, 2);
         $super_user = countUser($conn, 3);
         
-
-        echo $alluser;
-        echo $adminuser;
-        echo $other_user;
-        echo $super_user;
     ?>
 
     <title>หน้าหลัก</title>
@@ -70,19 +62,19 @@
                     </tr>
                     <tr>
                         <td>จำนวนผู้ใช้ทั้งหมด</td>
-                        <td> 5 คน</td>
+                        <td> <?php echo $alluser; ?> คน</td>
                     </tr>
                     <tr>
                         <td>จำนวนผู้ใช้ระดับ <b><u>[ADMIN]</u></b> </td>
-                        <td> 5 คน</td>
+                        <td> <?php echo $adminuser; ?> คน</td>
                     </tr>
                     <tr>
                         <td>จำนวนผู้ใช้ระดับ <b><u>[SUPER USER]</u></b> </td>
-                        <td> 5 คน</td>
+                        <td> <?php echo $super_user; ?> คน</td>
                     </tr>
                     <tr>
                         <td>จำนวนผู้ใช้ระดับ <b><u>[USER]</u></b>  </td>
-                        <td> 5 คน</td>
+                        <td> <?php echo $other_user; ?> คน</td>
                     </tr>
                 </table>
 

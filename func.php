@@ -57,37 +57,6 @@
         }
         return $x;
     }
-
-    /* function countAdminuser()
-    function countUser($conn) {
-        $x;
-        $sql = "SELECT COUNT(user_id) as c FROM users WHERE permission_id = 2";
-        $result= $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-             while($row = $result->fetch_assoc()) {
-                $x = $row['c'];
-             }
-        }
-        return $x;
-    }
-    */
-
-    /* function countSuperuser()
-    function countSuperuser($conn) {
-        $x;
-        $sql = "SELECT COUNT(user_id) as c FROM users WHERE permission_id = 3";
-        $result= $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-             while($row = $result->fetch_assoc()) {
-                $x = $row['c'];
-             }
-        }
-        return $x;
-    }
-    */
-
     
 
 

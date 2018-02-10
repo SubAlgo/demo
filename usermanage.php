@@ -36,7 +36,7 @@
     <!-- BODY -->
         <div class="ui vertical stripe segment">
             <div class="ui container">
-                test tests
+                แสดง เพิ่ม แก้ไข ลบ
             </div>
         </div>
     <!-- BODY -->
