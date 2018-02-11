@@ -36,7 +36,67 @@
     <!-- BODY -->
         <div class="ui vertical stripe segment">
             <div class="ui container">
-                แสดง เพิ่ม แก้ไข ลบ
+
+                <!-- link to user_add.php -->
+                <div>
+                    <a href="./user_add.php" class="ui labeled icon button green">
+                        <i class="right add user icon"></i>
+                        เพิ่มผู้ใช้
+                    </a>
+                </div>
+
+                <div>
+                    <table class="ui celled padded table">
+                        <thead >
+                            <th colspan="8">ADMIN</th>
+                        </thead>
+                        <tr>
+                            <td colspan="2">
+                                <div align="center"> <b> User id </b> </div>
+                            </th>
+                            <td colspan="4">
+                                <div align="center"> <b> ชื่อ - นามสกุล </b> </div>
+                            </td>
+                            <td colspan="2"> 
+                                <div align="center">  <b>แก้ไข/ลบ </b> </div>
+                            </td>
+                        </tr>
+
+                        
+
+
+                        <tr>
+                            <td colspan="2">
+                                <div align="center"> admin </div>
+                            </td>
+
+                            <td colspan="4">
+                                <div align="center"> นาย สสส ออออ </div>
+                            </td>
+
+                            <td >
+                                <div align="center">
+                                    <a href="./user_edit.php?id1" class="ui labeled icon button blue">
+                                        <i class="right edit icon"></i>
+                                        แก้ไข
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div align="center">
+                                    <a href="./user_edit.php?id1" class="ui labeled icon button red">
+                                        <i class="right remove user icon"></i>
+                                        ลบ
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                               
+  
+
             </div>
         </div>
     <!-- BODY -->
