@@ -46,52 +46,111 @@
                 </div>
 
                 <div>
-                    <table class="ui celled padded table">
-                        <thead >
-                            <th colspan="8">ADMIN</th>
+                    <table class="ui celled striped table">
+                        <thead>
+                            <tr>
+                                <th colspan="5">
+                                    ADMIN
+                                </th>
+                            </tr>
                         </thead>
-                        <tr>
-                            <td colspan="2">
-                                <div align="center"> <b> User id </b> </div>
-                            </th>
-                            <td colspan="4">
-                                <div align="center"> <b> ชื่อ - นามสกุล </b> </div>
-                            </td>
-                            <td colspan="2"> 
-                                <div align="center">  <b>แก้ไข/ลบ </b> </div>
-                            </td>
-                        </tr>
+                  
+                        <tbody>
+                            <tr>
+                                <td colspan="2" class="collapsing">
+                                    <div align="center"> <b> User id </b> </div>
+                                </td>
+                                <td>
+                                    <div align="center"> <b> ชื่อ - นามสกุล </b> </div>
+                                </td>
+                                <td colspan="2" class="right aligned collapsing" >
+                                    <div align="center">  <b>แก้ไข/ลบ </b> </div>
+                                </td>
+                            </tr>
 
-                        
+                            <tr>
+                                <td colspan="2" class="collapsing">
+                                    <div align="center"> admin </div>
+                                </td>
 
+                                <td>
+                                    <div align="center"> นาย สสส ออออ </div>
+                                </td>
 
-                        <tr>
-                            <td colspan="2">
-                                <div align="center"> admin </div>
-                            </td>
+                                <td class="right aligned collapsing">
+                                    <div align="center">
+                                        <a href="./user_edit.php?id1" class="ui labeled icon button blue">
+                                            <i class="right edit icon"></i>
+                                            แก้ไข
+                                        </a>
+                                    </div>
+                                </td>
 
-                            <td colspan="4">
-                                <div align="center"> นาย สสส ออออ </div>
-                            </td>
+                                <td class="right aligned collapsing">
+                                    <div align="center">
+                                        <a href="./user_edit.php?id1" class="ui labeled icon button red">
+                                            <i class="right remove user icon"></i>
+                                            ลบ
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                    
+                            <tr>
+                                <td colspan="2" class="collapsing">
+                                    <div align="center"> admin </div>
+                                </td>
 
-                            <td >
-                                <div align="center">
-                                    <a href="./user_edit.php?id1" class="ui labeled icon button blue">
-                                        <i class="right edit icon"></i>
-                                        แก้ไข
-                                    </a>
-                                </div>
-                            </td>
+                                <td>
+                                    <div align="center"> นาย สสส ออออ </div>
+                                </td>
 
-                            <td>
-                                <div align="center">
-                                    <a href="./user_edit.php?id1" class="ui labeled icon button red">
-                                        <i class="right remove user icon"></i>
-                                        ลบ
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                <td class="right aligned collapsing">
+                                    <div align="center">
+                                        <a href="./user_edit.php?id1" class="ui labeled icon button blue">
+                                            <i class="right edit icon"></i>
+                                            แก้ไข
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="right aligned collapsing">
+                                    <div align="center">
+                                        <a href="./user_edit.php?id1" class="ui labeled icon button red">
+                                            <i class="right remove user icon"></i>
+                                            ลบ
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="collapsing">
+                                    <div align="center"> admin </div>
+                                </td>
+
+                                <td>
+                                    <div align="center"> นาย สสส ออออ </div>
+                                </td>
+
+                                <td class="right aligned collapsing">
+                                    <div align="center">
+                                        <a href="./user_edit.php?id1" class="ui labeled icon button blue">
+                                            <i class="right edit icon"></i>
+                                            แก้ไข
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="right aligned collapsing">
+                                    <div align="center">
+                                        <a href="./user_del.php?id1" class="ui labeled icon button red">
+                                            <i class="right remove user icon"></i>
+                                            ลบ
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                                
