@@ -16,6 +16,27 @@
         //echo json_encode($permis);
     ?>
 
+    <!-- validate data -->
+        <?php
+            // define variables and set to empty values
+            $uid = $pwd = $pwd2 = $t_name = $f_name = $l_name = $per = "";
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+              $name = test_input($_POST["name"]);
+              $email = test_input($_POST["email"]);
+              $website = test_input($_POST["website"]);
+              $comment = test_input($_POST["comment"]);
+              $gender = test_input($_POST["gender"]);
+            }
+
+            function test_input($data) {
+              $data = trim($data);
+              $data = stripslashes($data);
+              $data = htmlspecialchars($data);
+              return $data;
+            }
+        ?>
+
     <title>เพิ่มผู้ใช้งานระบบ</title>
     
 </head>
@@ -55,7 +76,7 @@
                                 <td class="collapsing">USERNAME</td>
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
-                                        <input type="text" name="userid" id="userid" placeholder="ใส่ username...">
+                                        <input type="text" name="userid" id="userid" Required placeholder="ใส่ username...">
                                         
                                     </div>
                                 </td>
@@ -65,7 +86,7 @@
                                 <td class="collapsing">PASSWORD</td>
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
-                                        <input type="password" name="password" id="password"  placeholder="password (อย่างน้อย6ตัว)">
+                                        <input type="password" name="password" id="password" Required placeholder="password (อย่างน้อย6ตัว)">
                                         
                                     </div>
                                 </td>
@@ -76,7 +97,7 @@
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
 
-                                        <input type="password" name="password_check" id="password_check" placeholder="กรอก password อีกครั้ง...">
+                                        <input type="password" name="password_check" id="password_check" Required placeholder="กรอก password อีกครั้ง...">
                                     
                                     </div>
                                 </td>
@@ -91,15 +112,13 @@
                                             <option value="">-- คำนำชื่อ --</option>
                                             <?php
                                                 foreach ($select_titlename as $titlename) {
-                                                    echo "<option value='{$titlename['titlename_id']}'>{$titlename['titlename_title']}</option>";
+                                                    echo "<option value='{$titlename['titlename_id']}'>
+                                                            {$titlename['titlename_title']}
+                                                          </option>";
                                                 }
                                             ?>
                                         </select>
-
                                     </div>
-                                            
-                                            
-                                    
                                 </td>
                             </tr>
 
@@ -108,7 +127,7 @@
                                 <td colspan="2" class="center aligned collapsing">
 
                                     <div class="ui large icon input">
-                                        <input type="text" name="username" id="username" placeholder="กรอกชื่อ...">
+                                        <input type="text" name="username" id="username" Required placeholder="กรอกชื่อ...">
                                     </div>
 
                                 </td>
@@ -118,7 +137,7 @@
                                 <td class="collapsing">นามสกุล</td>
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
-                                        <input type="text" name="surname" id="surname" placeholder="กรอกนามสกุล...">
+                                        <input type="text" name="surname" id="surname" Required placeholder="กรอกนามสกุล...">
                                         
                                     </div>
                                 </td>
