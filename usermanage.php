@@ -10,12 +10,27 @@
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
-        $all_admin = selectUser($conn, 1);
-        $all_superuser = selectUser($conn, 3);;
-        $all_user = selectUser($conn, 2);;
+        $selectUser = selectUser($conn, 1);
+        //$all_superuser = selectUser($conn, 3);
+        //$all_user = selectUser($conn, 2);
+        
+        $user_type = "admin";
 
-        //echo $all_admin;
-        echo json_encode($all_admin);
+        if(isset($_GET['u'])) {
+            $user_type = $_GET['u'];
+        }
+
+
+        if($user_type == "admin") {
+            $selectUser = selectUser($conn, 1);
+        } else if($user_type == "superuser") {
+            $selectUser = selectUser($conn, 3);
+        } else if($user_type == "user") {
+            $selectUser = selectUser($conn, 2);
+        }
+
+        //echo $selectUser;
+        //echo json_encode($selectUser);
     ?>
 
     <title>จัดการผู้ใช้ระบบ</title>
@@ -51,9 +66,30 @@
                 <br>
 
                 <div>
+                    <a href="./usermanage.php?u=admin" class="ui labeled icon button green">
+                        <i class="right search icon"></i>
+                        ADMIN
+                    </a>
+                    <a href="./usermanage.php?u=superuser" class="ui labeled icon button green">
+                        <i class="right search icon"></i>
+                        SUPER USER
+                    </a>
+                    <a href="./usermanage.php?u=user" class="ui labeled icon button green">
+                        <i class="right search icon"></i>
+                        USER
+                    </a>
+                </div>
+                <br>
+
+
+                <div>
                     <table class="ui celled striped table">
                         <thead>
-                            
+                            <tr>
+                                <th colspan="5">
+                                    <div align="center"> <b><?php echo strtoupper($user_type); ?></b> </div>
+                                </th>
+                            </tr>
                         </thead>
                   
                         <tbody>
@@ -69,27 +105,29 @@
                                 </td>
                                 
                             </tr>
-                            <tr>
-                                <td colspan="5">
-                                    <div align="center"> <b>ADMIN</b> </div>
-                                </td>
-                            </tr>
+                            
 
                             <!-- Loop Show ADMIN USER -->
                             <?php
-                                foreach ($all_admin as $user) {
+                                foreach ($selectUser as $user) {
                                     echo "<tr>";
                                         echo "<td colspan='2' class='collapsing'> 
                                                 <div align='center'> {$user['user_id']} </div>
                                                </td>";
 
                                         echo "<td>
-                                                <div align='center'> {$user['user_name']} {$user['user_surname']} </div>
+                                                <div align=''>
+                                                <b>
+                                                    {$user['titlename']}
+                                                    {$user['user_name']} 
+                                                    {$user['user_surname']}
+                                                </b>
+                                                </div>
                                               </td>";
 
                                         echo "<td class='right aligned collapsing'>
                                                 <div align='center'>
-                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button blue'>
+                                                    <a href='./user_edit.php?id={$user['user_id']}' class='ui labeled icon button blue'>
                                                         <i class='right edit icon'></i>
                                                         แก้ไข
                                                     </a>
@@ -98,7 +136,7 @@
                                         
                                         echo "<td class='right aligned collapsing'>
                                                 <div align='center'>
-                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button red'>
+                                                    <a href='./user_del.php?id={$user['user_id']}' class='ui labeled icon button red'>
                                                         <i class='right edit icon'></i>
                                                         ลบ
                                                     </a>
@@ -109,87 +147,6 @@
                                     
                                 }
                             ?>
-
-                            <!-- Loop Show Super user -->
-                            <tr>
-                                <td colspan="5">
-                                    <div align="center"> <b>SUPER USER</b> </div>
-                                </td>
-                            </tr>
-                            <?php
-                                foreach ($all_superuser as $user) {
-                                    echo "<tr>";
-                                        echo "<td colspan='2' class='collapsing'> 
-                                                <div align='center'> {$user['user_id']} </div>
-                                               </td>";
-
-                                        echo "<td>
-                                                <div align='center'> {$user['user_name']} {$user['user_surname']} </div>
-                                              </td>";
-
-                                        echo "<td class='right aligned collapsing'>
-                                                <div align='center'>
-                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button blue'>
-                                                        <i class='right edit icon'></i>
-                                                        แก้ไข
-                                                    </a>
-                                                </div>
-                                              </td>";
-                                        
-                                        echo "<td class='right aligned collapsing'>
-                                                <div align='center'>
-                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button red'>
-                                                        <i class='right edit icon'></i>
-                                                        ลบ
-                                                    </a>
-                                                </div>
-                                              </td>";
-
-                                    echo "</tr>";
-                                    
-                                }
-                            ?>
-
-                            <!-- Loop Show Super user -->
-                            <tr>
-                                <td colspan="5">
-                                    <div align="center"> <b>USER</b> </div>
-                                </td>
-                            </tr>
-                            <?php
-                                foreach ($all_user as $user) {
-                                    echo "<tr>";
-                                        echo "<td colspan='2' class='collapsing'> 
-                                                <div align='center'> {$user['user_id']} </div>
-                                               </td>";
-
-                                        echo "<td>
-                                                <div align='center'> {$user['user_name']} {$user['user_surname']} </div>
-                                              </td>";
-
-                                        echo "<td class='right aligned collapsing'>
-                                                <div align='center'>
-                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button blue'>
-                                                        <i class='right edit icon'></i>
-                                                        แก้ไข
-                                                    </a>
-                                                </div>
-                                              </td>";
-                                        
-                                        echo "<td class='right aligned collapsing'>
-                                                <div align='center'>
-                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button red'>
-                                                        <i class='right edit icon'></i>
-                                                        ลบ
-                                                    </a>
-                                                </div>
-                                              </td>";
-
-                                    echo "</tr>";
-                                    
-                                }
-                            ?>
-     
                         </tbody>
                     </table>
                 </div>

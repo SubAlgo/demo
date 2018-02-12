@@ -64,7 +64,22 @@
     // ใช้เพื่อ get ข้อมูลผู้ใช้ตาม type ของ permission
     function selectUser($conn, $permission) {
         $x = array();
-        $sql = "SELECT * FROM users WHERE permission_id = '{$permission}'";
+        //$sql = "SELECT * FROM users WHERE permission_id = '{$permission}'";
+       $sql = " SELECT
+                    titlename.titlename_title AS titlename,
+                    users.permission_id,
+                    users.user_id,
+                    users.user_name,
+                    users.user_surname
+                FROM
+                    (
+                        (
+                            users
+                        INNER JOIN titlename ON users.titlename_id = titlename.titlename_id
+                        )
+                    )
+                WHERE users.permission_id = {$permission}";
+        
         $result= $conn->query($sql);
 
         if ($result->num_rows > 0) {
