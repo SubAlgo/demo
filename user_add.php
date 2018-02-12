@@ -19,14 +19,19 @@
     <!-- validate data -->
         <?php
             // define variables and set to empty values
-            $uid = $pwd = $pwd2 = $t_name = $f_name = $l_name = $per = "";
+            //$uid = $pwd = $pwd2 = $t_name = $f_name = $l_name = $per = "";
+            
+            
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $uid = checkUser($conn, $_POST['userid']);
               $name = test_input($_POST["name"]);
               $email = test_input($_POST["email"]);
               $website = test_input($_POST["website"]);
               $comment = test_input($_POST["comment"]);
               $gender = test_input($_POST["gender"]);
+
+              echo $uid;
             }
 
             function test_input($data) {
@@ -61,7 +66,7 @@
             <div class="ui container">
 
                 <div align="center">
-                    <form action="">
+                    <form action="" method="post">
                         <table class="ui collapsing table">
                         <thead>
                             <tr>

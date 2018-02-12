@@ -28,7 +28,7 @@ INSERT INTO `permission`(
 )
 VALUES('1', 'Admin'),('2', 'User'),('3', 'Super user');
 
-INSERT INTO `titlename`(`titlename_id`, `titlenmae_title`)
+INSERT INTO `titlename`(`titlename_id`, `titlename_title`)
 VALUES('1', 'นาย'),('2', 'นาง'),('3', 'นางสาว'),
       ('4', 'สิบตรี'),('5', 'สิบโท'),('6', 'สิบเอก'),
       ('7', 'จ่าสิบตรี'),('8', 'จ่าสิบโท'),('9', 'จ่าสิบเอก'),('10', 'จ่าสิบเอกพิเศษ'),
