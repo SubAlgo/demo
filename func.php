@@ -31,6 +31,7 @@
     }
 
     // function countAlluser()
+    // ช้เพื่อนับจำนวนผู้ใช้ทั้งหมด
     function countAlluser($conn) {
         $x;
         $sql_countAlluser = "SELECT COUNT(user_id) as c FROM users";
@@ -44,7 +45,8 @@
         return $x;
     }
 
-    // function countUser()
+    // function countUser() [$conn = คำสั่ง connect  DB, $permission = type ของระดับสิทธิ์]
+    // ใช้เพื่อนับจำนวนผู้ใช้ตาม type ของ permission
     function countUser($conn, $permission) {
         $x;
         $sql = "SELECT COUNT(user_id) as c FROM users WHERE permission_id = '{$permission}'";
@@ -57,6 +59,23 @@
         }
         return $x;
     }
+
+    // function selectUser() [$conn = คำสั่ง connect  DB, $permission = type ของระดับสิทธิ์]
+    // ใช้เพื่อ get ข้อมูลผู้ใช้ตาม type ของ permission
+    function selectUser($conn, $permission) {
+        $x = array();
+        $sql = "SELECT * FROM users WHERE permission_id = '{$permission}'";
+        $result= $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+             while($row = $result->fetch_assoc()) {
+                $x[] = $row;
+             }
+        }
+        return $x;
+    }
+
+
     
 
 

@@ -10,8 +10,12 @@
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
-        $name = "Pichai";
-        $permission = "Admin";
+        $all_admin = selectUser($conn, 1);
+        $all_superuser = selectUser($conn, 3);;
+        $all_user = selectUser($conn, 2);;
+
+        //echo $all_admin;
+        echo json_encode($all_admin);
     ?>
 
     <title>จัดการผู้ใช้ระบบ</title>
@@ -44,6 +48,7 @@
                         เพิ่มผู้ใช้
                     </a>
                 </div>
+                <br>
 
                 <div>
                     <table class="ui celled striped table">
@@ -68,6 +73,7 @@
                                 </td>
                             </tr>
 
+                            <!-- SHOW 
                             <tr>
                                 <td colspan="2" class="collapsing">
                                     <div align="center"> admin </div>
@@ -95,61 +101,41 @@
                                     </div>
                                 </td>
                             </tr>
-                    
-                            <tr>
-                                <td colspan="2" class="collapsing">
-                                    <div align="center"> admin </div>
-                                </td>
+                            -->
+                            <?php
+                                foreach ($all_admin as $user) {
+                                    echo "<tr>";
+                                        echo "<td colspan='2' class='collapsing'> 
+                                                <div align='center'> {$user['user_id']} </div>
+                                               </td>";
 
-                                <td>
-                                    <div align="center"> นาย สสส ออออ </div>
-                                </td>
+                                        echo "<td>
+                                                <div align='center'> {$user['user_name']} {$user['user_surname']} </div>
+                                              </td>";
 
-                                <td class="right aligned collapsing">
-                                    <div align="center">
-                                        <a href="./user_edit.php?id1" class="ui labeled icon button blue">
-                                            <i class="right edit icon"></i>
-                                            แก้ไข
-                                        </a>
-                                    </div>
-                                </td>
+                                        echo "<td class='right aligned collapsing'>
+                                                <div align='center'>
+                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button blue'>
+                                                        <i class='right edit icon'></i>
+                                                        แก้ไข
+                                                    </a>
+                                                </div>
+                                              </td>";
+                                        
+                                        echo "<td class='right aligned collapsing'>
+                                                <div align='center'>
+                                                    <a href='./user_edit.php?id{$user['user_id']}' class='ui labeled icon button red'>
+                                                        <i class='right edit icon'></i>
+                                                        ลบ
+                                                    </a>
+                                                </div>
+                                              </td>";
 
-                                <td class="right aligned collapsing">
-                                    <div align="center">
-                                        <a href="./user_edit.php?id1" class="ui labeled icon button red">
-                                            <i class="right remove user icon"></i>
-                                            ลบ
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="collapsing">
-                                    <div align="center"> admin </div>
-                                </td>
-
-                                <td>
-                                    <div align="center"> นาย สสส ออออ </div>
-                                </td>
-
-                                <td class="right aligned collapsing">
-                                    <div align="center">
-                                        <a href="./user_edit.php?id1" class="ui labeled icon button blue">
-                                            <i class="right edit icon"></i>
-                                            แก้ไข
-                                        </a>
-                                    </div>
-                                </td>
-
-                                <td class="right aligned collapsing">
-                                    <div align="center">
-                                        <a href="./user_del.php?id1" class="ui labeled icon button red">
-                                            <i class="right remove user icon"></i>
-                                            ลบ
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                    echo "</tr>";
+                                    
+                                }
+                            ?>
+     
                         </tbody>
                     </table>
                 </div>
