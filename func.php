@@ -90,6 +90,40 @@
         return $x;
     }
 
+    // function getTitlename()
+    function getTitlename($conn) {
+        $x = array();
+
+        $sql = "SELECT * FROM titlename ORDER BY 'titlename_id' asc";
+
+        $result= $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+             while($row = $result->fetch_assoc()) {
+                $x[] = $row;
+             }
+        }
+        return $x;
+    }
+
+    //function getPermission($conn)
+    function getPermission($conn) {
+        $x = array();
+
+        $sql = "SELECT * FROM permission";
+
+        $result= $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+             while($row = $result->fetch_assoc()) {
+                $x[] = $row;
+             }
+        }
+        return $x;
+    }
+
+    
+
 
     
 

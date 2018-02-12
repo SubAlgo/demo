@@ -66,15 +66,15 @@
                 <br>
 
                 <div>
-                    <a href="./usermanage.php?u=admin" class="ui labeled icon button green">
+                    <a href="./usermanage.php?u=admin" class="ui labeled icon button blue">
                         <i class="right search icon"></i>
                         ADMIN
                     </a>
-                    <a href="./usermanage.php?u=superuser" class="ui labeled icon button green">
+                    <a href="./usermanage.php?u=superuser" class="ui labeled icon button blue">
                         <i class="right search icon"></i>
                         SUPER USER
                     </a>
-                    <a href="./usermanage.php?u=user" class="ui labeled icon button green">
+                    <a href="./usermanage.php?u=user" class="ui labeled icon button blue">
                         <i class="right search icon"></i>
                         USER
                     </a>
@@ -83,7 +83,7 @@
 
 
                 <div>
-                    <table class="ui celled striped table">
+                    <table class="ui selectable celled table">
                         <thead>
                             <tr>
                                 <th colspan="5">
