@@ -14,14 +14,12 @@
             die();
         }
     ?>
-
-    <!-- CHECK PERMISSION ACCESS [If not admin , Will redirect ot page by permission] -->
+    
+    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
     <?php
-        //if (!isset($_SESSION['userid'])) {
-        //    header("Location: //{$path}/index.php");
-        //    die();
-        //}
+        include_once "./check_admin.php";
     ?>
+    
 
     <!-- SETTING DATA -->
     <?php

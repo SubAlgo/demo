@@ -7,8 +7,17 @@
 
     <?php include_once 'inc.php' ?>
 
+    <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
+    <?php
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: //{$path}/index.php");
+            die();
+        }
+    ?>
+
     <!-- SETTING DATA -->
     <?php
+    
         /*----- SETTING DATA -----*/
         $selectUser = selectUser($conn, 1);
         //$all_superuser = selectUser($conn, 3);

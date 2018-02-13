@@ -124,17 +124,24 @@
 
     //functiom checkUser()
     function checkUser($conn, $user_id) {
+
+        // trim space
+        $user_id = preg_replace('/[[:space:]]+/', '', trim($user_id));
+
+        //Check Duplicate
         $sql = "SELECT user_id FROM users WHERE user_id = '{$user_id}' ";
-
-        $result= $conn->query($sql);
-
+        $result= $conn->query($sql);      
         if($result->num_rows > 0) {
-            $x = 0;
-        } else {
-            $x = 1;
+            return "มีผู้ใช้ user id นี้ในระบบแล้ว";
         }
-
-        return $x;
+        
+        //Check special character        
+        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $user_id)>0) {
+            return "ไม่อนุญาตให้ใช้ตัวอักษรพิเศษ";
+        }
+        
+        return $user_id;
+        
     }
     
 

@@ -7,6 +7,14 @@
 
     <?php include_once 'inc.php' ?>
 
+    <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
+    <?php
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: //{$path}/index.php");
+            die();
+        }
+    ?>
+
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
@@ -18,20 +26,35 @@
 
     <!-- validate data -->
         <?php
+        echo "<script src='./validate_adduser.js'></script>";
             // define variables and set to empty values
             //$uid = $pwd = $pwd2 = $t_name = $f_name = $l_name = $per = "";
             
             
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $uid = checkUser($conn, $_POST['userid']);
-              $name = test_input($_POST["name"]);
-              $email = test_input($_POST["email"]);
-              $website = test_input($_POST["website"]);
-              $comment = test_input($_POST["comment"]);
-              $gender = test_input($_POST["gender"]);
+                $uid = $_POST['userid'];
+                $pwd = $_POST['password'];
+                $pwd2 = $_POST['password_check'];
+                $t_name = $_POST['titlename'];
+                $f_name = $_POST['username'];
+                $l_name = $_POST['surname'];
+                $per = $_POST['permis'];
 
-              echo $uid;
+                echo "<br>";
+                echo $uid ;
+                //echo "<br>";
+                //echo $pwd ;
+                //echo "<br>";
+                //echo $pwd2 ;
+                //echo "<br>";
+                //echo $t_name ;
+                //echo "<br>";
+                //echo $f_name ;
+                //echo "<br>";
+                //echo $l_name ;
+                //echo "<br>";
+                //echo $per;
             }
 
             function test_input($data) {
@@ -60,13 +83,14 @@
             include_once "./layout/admin_nav.php";
         ?>
     <!-- NAV BAR -->
+    
 
     <!-- BODY -->
         <div class="ui vertical stripe segment">
             <div class="ui container">
 
                 <div align="center">
-                    <form action="" method="post">
+                    <form name="myForm" action="" onsubmit="return validateForm()" method="post">
                         <table class="ui collapsing table">
                         <thead>
                             <tr>
@@ -153,7 +177,7 @@
                                 <td colspan="2" class="center aligned collapsing">
                                 
                                     <div class="field">
-                                        <select class="ui fluid search dropdown" name="pemis">
+                                        <select class="ui fluid search dropdown" name="permis" id="permis">
                                             <option value="">--เลือกระดับสิทธิ์ของผู้ใช้--</option>
                                             <?php
                                                 foreach($permis as $permi ) {
