@@ -18,20 +18,32 @@ function validateForm() {
         return false
     }
     //-Check special character
-    if (format.test(userid)) {
-        alert("มีตัวอักษณพิเศษ")
+    if(format.test(userid)) {
+        alert("ห้ามตั้ง USERNAME ด้วยตัวอักษณพิเศษ")
+        return false
+    }
+    //-Check string space in userid
+    if (/\s/.test(userid)) {
+        alert("ห้ามมีช่องว่างใน username")
         return false
     }
     /* ----- Validate USER ----- */
 
     /* ----- Validate PASSWORD ----- */
     pwd = pwd.trim()
+    //-Check password null
     if(pwd.length == 0) {
         alert("กรุณากรอก PASSWORD")
         return false
     }
+    //-Check password length < 6
     if (pwd.length < 6) {
         alert("กรุณาใส่ PASSWORD อย่างน้อย 6 ตัวอักษร")
+        return false
+    }
+    //-Check string space in password
+    if (/\s/.test(pwd)) {
+        alert("ห้ามมีช่องว่างใน PASSWORD")
         return false
     }
 

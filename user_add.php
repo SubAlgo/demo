@@ -25,45 +25,59 @@
     ?>
 
     <!-- validate data -->
-        <?php
+    <?php
+        $chk_userid = '';
+        $uid = '';
+        
+        //เรียกใช้ javascript [validate_adduser.js] เพื่อ validate Form create USER
         echo "<script src='./validate_adduser.js'></script>";
-            // define variables and set to empty values
-            //$uid = $pwd = $pwd2 = $t_name = $f_name = $l_name = $per = "";
+         
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $uid = $_POST['userid'];
+            $pwd = $_POST['password'];
+            $pwd2 = $_POST['password_check'];
+            $t_name = $_POST['titlename'];
+            $f_name = $_POST['username'];
+            $l_name = $_POST['surname'];
+            $per = $_POST['permis'];
+
+            //Check ว่า userid ที่จะใช้มีอยู่แล้วในระบบหรือไม่ ถ้ามีซ้ำ return กับมาเป็นข้อความ
+            //ถ้าไม่ซ้ำ จะ return เป็น true(1)
+            $chk_userid = checkUser($conn, $uid);
+
+            //ถ้า $chk_userid == 1 หมายความว่า ผ่านการตรวจสอบรูปแบบ FORM เป็น userid ที่จะสร้างไม่ซ้ำ
+            //ให้เรียก function createUser() โดยส่งค่า $conn, $uid, $pwd, $t_name, $f_name, $l_name, $per เพื่อนำไปสร้าง userid ใหม่
+            if($chk_userid == 1) {
+                $x = createUser($conn, $uid, $pwd, $t_name, $f_name, $l_name, $per);
+                echo $x;
+            }
             
             
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $uid = $_POST['userid'];
-                $pwd = $_POST['password'];
-                $pwd2 = $_POST['password_check'];
-                $t_name = $_POST['titlename'];
-                $f_name = $_POST['username'];
-                $l_name = $_POST['surname'];
-                $per = $_POST['permis'];
-
-                echo "<br>";
-                echo $uid ;
-                //echo "<br>";
-                //echo $pwd ;
-                //echo "<br>";
-                //echo $pwd2 ;
-                //echo "<br>";
-                //echo $t_name ;
-                //echo "<br>";
-                //echo $f_name ;
-                //echo "<br>";
-                //echo $l_name ;
-                //echo "<br>";
-                //echo $per;
-            }
-
-            function test_input($data) {
-              $data = trim($data);
-              $data = stripslashes($data);
-              $data = htmlspecialchars($data);
-              return $data;
-            }
-        ?>
+            
+            
+            
+            //echo "<br>";
+            //echo $uid ;
+            //echo "<br>";
+            //echo $pwd ;
+            //echo "<br>";
+            //echo $pwd2 ;
+            //echo "<br>";
+            //echo $t_name ;
+            //echo "<br>";
+            //echo $f_name ;
+            //echo "<br>";
+            //echo $l_name ;
+            //echo "<br>";
+            //echo $per;
+        }
+        function test_input($data) {
+          $data = trim($data);
+          $data = stripslashes($data);
+          $data = htmlspecialchars($data);
+          return $data;
+        }
+    ?>
 
     <title>เพิ่มผู้ใช้งานระบบ</title>
     
@@ -90,6 +104,22 @@
             <div class="ui container">
 
                 <div align="center">
+                    
+                    <!-- SHOW PROCESS RESULT STATUS -->
+                    <?php
+                        // $chk_userid ถูกกำหนดค่าเริ่มต้นเป็น '' ดังนั้น ถ้าจะให้โชว์ค่าอะไรสักอย่างเมื่อ $chk_userid ถูกเป็นค่า 
+                        // strlen ต้องไม่เท่ากับ 0
+                        // และ ถ้า userid ไม่ซ้ำ $chk_userid จะได้รับ return กลับมาเป็น 1 ดังนั้นถ้าจะ show error ค่าต้องไม่เท่ากับ 1
+                        if($chk_userid != 1 && strlen($chk_userid) != 0) {
+                            echo "<div class='ui red horizontal label'>";
+                            echo "<h3>{$chk_userid}</h3>";
+                            echo "</div>";
+                        } 
+                    ?>
+
+                    <!-- SHOW PROCESS RESULT STATUS -->
+                    
+                    
                     <form name="myForm" action="" onsubmit="return validateForm()" method="post">
                         <table class="ui collapsing table">
                         <thead>

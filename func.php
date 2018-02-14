@@ -132,7 +132,7 @@
         $sql = "SELECT user_id FROM users WHERE user_id = '{$user_id}' ";
         $result= $conn->query($sql);      
         if($result->num_rows > 0) {
-            return "มีผู้ใช้ user id นี้ในระบบแล้ว";
+            return "USERNAME [{$user_id}] มีในระบบแล้ว";
         }
         
         //Check special character        
@@ -140,8 +140,22 @@
             return "ไม่อนุญาตให้ใช้ตัวอักษรพิเศษ";
         }
         
-        return $user_id;
+        return true;
         
+    }
+
+    function createUser($conn, $uid, $pwd, $t_name, $f_name, $l_name, $per) {
+        $sql = "INSERT INTO users (user_id, user_password, titlename_id, user_name, user_surname, permission_id)
+                VALUES ('{$uid}', '{$pwd}', '{$t_name}', '{$f_name}', '{$l_name}', '{$per}') ";
+
+        if ($conn->query($sql) === TRUE) {
+            return "New record created successfully";
+            //echo "New record created successfully";
+        } else {
+            return "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
     }
     
 
