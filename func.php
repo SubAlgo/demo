@@ -149,8 +149,8 @@
                 VALUES ('{$uid}', '{$pwd}', '{$t_name}', '{$f_name}', '{$l_name}', '{$per}') ";
 
         if ($conn->query($sql) === TRUE) {
-            return "New record created successfully";
-            //echo "New record created successfully";
+            //return "New record created successfully";
+            return 1;
         } else {
             return "Error: " . $sql . "<br>" . $conn->error;
         }

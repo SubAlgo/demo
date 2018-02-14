@@ -28,6 +28,7 @@
     <?php
         $chk_userid = '';
         $uid = '';
+        $insertState = '';
         
         //เรียกใช้ javascript [validate_adduser.js] เพื่อ validate Form create USER
         echo "<script src='./validate_adduser.js'></script>";
@@ -48,8 +49,8 @@
             //ถ้า $chk_userid == 1 หมายความว่า ผ่านการตรวจสอบรูปแบบ FORM เป็น userid ที่จะสร้างไม่ซ้ำ
             //ให้เรียก function createUser() โดยส่งค่า $conn, $uid, $pwd, $t_name, $f_name, $l_name, $per เพื่อนำไปสร้าง userid ใหม่
             if($chk_userid == 1) {
-                $x = createUser($conn, $uid, $pwd, $t_name, $f_name, $l_name, $per);
-                echo $x;
+                $insertState = createUser($conn, $uid, $pwd, $t_name, $f_name, $l_name, $per);
+                //echo $x;
             }
             
             
@@ -113,6 +114,11 @@
                         if($chk_userid != 1 && strlen($chk_userid) != 0) {
                             echo "<div class='ui red horizontal label'>";
                             echo "<h3>{$chk_userid}</h3>";
+                            echo "</div>";
+                        }
+                        if($insertState == 1 ) {
+                            echo "<div class='ui green horizontal label'>";
+                            echo "<h3>New record created successfully</h3>";
                             echo "</div>";
                         } 
                     ?>
