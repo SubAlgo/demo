@@ -52,21 +52,7 @@
                 $insertState = createUser($conn, $uid, $pwd, $t_name, $f_name, $l_name, $per);
                 //echo $x;
             }
-
-            //echo "<br>";
-            //echo $uid ;
-            //echo "<br>";
-            //echo $pwd ;
-            //echo "<br>";
-            //echo $pwd2 ;
-            //echo "<br>";
-            //echo $t_name ;
-            //echo "<br>";
-            //echo $f_name ;
-            //echo "<br>";
-            //echo $l_name ;
-            //echo "<br>";
-            //echo $per;
+            
         }
         function test_input($data) {
           $data = trim($data);

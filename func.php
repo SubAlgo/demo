@@ -158,7 +158,7 @@
         $conn->close();
     }
 
-    function preuserdata($conn, $id){
+    function preuserdata($conn, $id) {
         $sql = "SELECT
                     users.user_id,
                     users.titlename_id,
@@ -185,6 +185,28 @@
              }
         }
         return $x;
+    }
+
+    function editUser($conn, $id, $t_name, $f_name, $l_name, $per) {
+        $sql = "UPDATE  users
+
+                SET     titlename_id  =  '{$t_name}',
+                        user_name     =  '{$f_name}',
+                        user_surname  =  '{$l_name}',
+                        permission_id =  '{$per}'
+
+                WHERE   user_id       =  '$id' 
+                ";
+
+        if ($conn->query($sql) === TRUE) {
+            //return "New record created successfully";
+            return 1;
+        } else {
+            return "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
+        
     }
     
 

@@ -14,11 +14,11 @@
         $select_titlename = getTitlename($conn);
         $permis = getPermission($conn);
         $id = $_GET['id'];
-        $x = preuserdata($conn, $id);
+        $userdata = preuserdata($conn, $id);
     
-        print_r($x);
-        echo "<br>";
-        echo $x['titlename_id'];
+        //print_r($userdata);
+        //echo "<br>";
+        //echo $userdata['titlename_id'];
         
         echo "<script src='./validate_edituser.js'></script>";
 
@@ -38,6 +38,14 @@
             echo $_POST['permis'];
 
             $ec = editUser($conn, $id, $t_name, $f_name, $l_name, $per);
+            
+            if ($ec == 1) {
+                $_POST = array();
+                echo '<script language="javascript">';
+                    echo 'alert("UPDATE SUCCESS!!!")';
+                echo '</script>';
+                header("Refresh:0");
+            }
             
         }
         
@@ -73,16 +81,7 @@
                         // $chk_userid ถูกกำหนดค่าเริ่มต้นเป็น '' ดังนั้น ถ้าจะให้โชว์ค่าอะไรสักอย่างเมื่อ $chk_userid ถูกเป็นค่า 
                         // strlen ต้องไม่เท่ากับ 0
                         // และ ถ้า userid ไม่ซ้ำ $chk_userid จะได้รับ return กลับมาเป็น 1 ดังนั้นถ้าจะ show error ค่าต้องไม่เท่ากับ 1
-                        if($chk_userid != 1 && strlen($chk_userid) != 0) {
-                            echo "<div class='ui red horizontal label'>";
-                            echo "<h3>{$chk_userid}</h3>";
-                            echo "</div>";
-                        }
-                        if($insertState == 1 ) {
-                            echo "<div class='ui green horizontal label'>";
-                            echo "<h3>New record created successfully</h3>";
-                            echo "</div>";
-                        } 
+                       
                     ?>
 
                     <!-- SHOW PROCESS RESULT STATUS -->
@@ -103,7 +102,7 @@
                                 <td class="collapsing">USERNAME</td>
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
-                                        <input type="text" name="userid" id="userid" value="<?php echo $x['user_id'] ?>" disabled>
+                                        <input type="text" name="userid" id="userid" value="<?php echo $userdata['user_id'] ?>" disabled>
                                         
                                     </div>
                                 </td>
@@ -120,7 +119,7 @@
                                                 // ในการวน loop เพื่อแสดง คำนำชื่อ จะเช็คดูว่า titlename_id เดิมคือเท่าไหร่ 
                                                 //แล้วจะ selected option นั้น
                                                 foreach ($select_titlename as $titlename) {
-                                                    if($titlename['titlename_id'] == $x['titlename_id'] ){
+                                                    if($titlename['titlename_id'] == $userdata['titlename_id'] ){
                                                         echo "<option value='{$titlename['titlename_id']}' selected>
                                                                 {$titlename['titlename_title']}
                                                               </option>";
@@ -143,7 +142,7 @@
                                     <div class="ui large icon input">
                                         <input type="text" name="username" id="username" 
                                                Required placeholder="กรอกชื่อ..."
-                                               value="<?php echo $x['user_name']; ?>"
+                                               value="<?php echo $userdata['user_name']; ?>"
                                         ">
                                     </div>
 
@@ -156,7 +155,7 @@
                                     <div class="ui large icon input">
                                         <input type="text" name="surname" id="surname" 
                                                Required placeholder="กรอกนามสกุล..." 
-                                               value="<?php echo $x['user_surname']; ?>"
+                                               value="<?php echo $userdata['user_surname']; ?>"
                                         ">
                                         
                                     </div>
@@ -172,7 +171,7 @@
                                             <option value="">--เลือกระดับสิทธิ์ของผู้ใช้--</option>
                                             <?php
                                                 foreach($permis as $permi ) {
-                                                    if($permi['permission_id'] == $x['permission_id']) {
+                                                    if($permi['permission_id'] == $userdata['permission_id']) {
                                                         echo "<option value='{$permi['permission_id']}'selected>
                                                                 {$permi['permission_title']} 
                                                               </option>";  
