@@ -104,7 +104,7 @@
                         <tbody>
                         <tr>
                                 <td colspan="2" class="collapsing">
-                                    <div align="center"> <b> User id </b> </div>
+                                    <div align="center"> <b> USER ID </b> </div>
                                 </td>
                                 <td>
                                     <div align="center"> <b> ชื่อ - นามสกุล </b> </div>

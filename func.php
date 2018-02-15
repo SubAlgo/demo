@@ -159,6 +159,7 @@
     }
 
     function preuserdata($conn, $id) {
+        $x="";
         $sql = "SELECT
                     users.user_id,
                     users.titlename_id,
@@ -207,6 +208,19 @@
 
         $conn->close();
         
+    }
+
+    function delUser($conn, $id) {
+        $sql = "DELETE FROM users WHERE user_id = '{$id}'";
+
+        if ($conn->query($sql) === TRUE) {
+            //return "New record created successfully";
+            return 1;
+        } else {
+            return "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
     }
     
 
