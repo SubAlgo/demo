@@ -157,6 +157,35 @@
 
         $conn->close();
     }
+
+    function preuserdata($conn, $id){
+        $sql = "SELECT
+                    users.user_id,
+                    users.titlename_id,
+                    titlename.titlename_title,
+                    users.user_name,
+                    users.user_surname,
+                    users.permission_id,
+                    permission.permission_title
+                FROM
+                    (
+                        (
+                            users
+                        INNER JOIN titlename ON users.titlename_id = titlename.titlename_id
+                        )
+                    INNER JOIN permission ON users.permission_id = permission.permission_id
+                    )
+                WHERE user_id = '{$id}'";
+        
+        $result= $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+             while($row = $result->fetch_assoc()) {
+                $x = $row;
+             }
+        }
+        return $x;
+    }
     
 
 

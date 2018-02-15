@@ -10,8 +10,37 @@
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
+        
+        $select_titlename = getTitlename($conn);
+        $permis = getPermission($conn);
         $id = $_GET['id'];
-        echo $id;
+        $x = preuserdata($conn, $id);
+    
+        print_r($x);
+        echo "<br>";
+        echo $x['titlename_id'];
+        
+        echo "<script src='./validate_edituser.js'></script>";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            
+            $t_name = $_POST['titlename'];
+            $f_name = $_POST['username'];
+            $l_name = $_POST['surname'];
+            $per = $_POST['permis'];
+
+            
+            echo "<br>";
+            echo "id: {$id}";
+            echo $_POST['titlename'];
+            echo $_POST['username'];
+            echo $_POST['surname'];
+            echo $_POST['permis'];
+
+            $ec = editUser($conn, $id, $t_name, $f_name, $l_name, $per);
+            
+        }
+        
         
     ?>
 
@@ -59,7 +88,7 @@
                     <!-- SHOW PROCESS RESULT STATUS -->
                     
                     
-                    <form name="myForm" action="" onsubmit="return validateForm()" method="post">
+                    <form name="myForm" action="" onsubmit="return validateEditForm()" method="post">
                         <table class="ui collapsing table">
                         <thead>
                             <tr>
@@ -74,29 +103,8 @@
                                 <td class="collapsing">USERNAME</td>
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
-                                        <input type="text" name="userid" id="userid" Required placeholder="ใส่ username...">
+                                        <input type="text" name="userid" id="userid" value="<?php echo $x['user_id'] ?>" disabled>
                                         
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="collapsing">PASSWORD</td>
-                                <td colspan="2" class="center aligned collapsing">
-                                    <div class="ui large icon input">
-                                        <input type="password" name="password" id="password" Required placeholder="password (อย่างน้อย6ตัว)">
-                                        
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="collapsing">PASSWORD (again)</td>
-                                <td colspan="2" class="center aligned collapsing">
-                                    <div class="ui large icon input">
-
-                                        <input type="password" name="password_check" id="password_check" Required placeholder="กรอก password อีกครั้ง...">
-                                    
                                     </div>
                                 </td>
                             </tr>
@@ -109,10 +117,18 @@
                                         <select class="ui fluid search dropdown" name="titlename" id="titlename">
                                             <option value="">-- คำนำชื่อ --</option>
                                             <?php
+                                                // ในการวน loop เพื่อแสดง คำนำชื่อ จะเช็คดูว่า titlename_id เดิมคือเท่าไหร่ 
+                                                //แล้วจะ selected option นั้น
                                                 foreach ($select_titlename as $titlename) {
-                                                    echo "<option value='{$titlename['titlename_id']}'>
-                                                            {$titlename['titlename_title']}
-                                                          </option>";
+                                                    if($titlename['titlename_id'] == $x['titlename_id'] ){
+                                                        echo "<option value='{$titlename['titlename_id']}' selected>
+                                                                {$titlename['titlename_title']}
+                                                              </option>";
+                                                    } else {
+                                                        echo "<option value='{$titlename['titlename_id']}'>
+                                                                {$titlename['titlename_title']}
+                                                              </option>";
+                                                    }
                                                 }
                                             ?>
                                         </select>
@@ -125,7 +141,10 @@
                                 <td colspan="2" class="center aligned collapsing">
 
                                     <div class="ui large icon input">
-                                        <input type="text" name="username" id="username" Required placeholder="กรอกชื่อ...">
+                                        <input type="text" name="username" id="username" 
+                                               Required placeholder="กรอกชื่อ..."
+                                               value="<?php echo $x['user_name']; ?>"
+                                        ">
                                     </div>
 
                                 </td>
@@ -135,7 +154,10 @@
                                 <td class="collapsing">นามสกุล</td>
                                 <td colspan="2" class="center aligned collapsing">
                                     <div class="ui large icon input">
-                                        <input type="text" name="surname" id="surname" Required placeholder="กรอกนามสกุล...">
+                                        <input type="text" name="surname" id="surname" 
+                                               Required placeholder="กรอกนามสกุล..." 
+                                               value="<?php echo $x['user_surname']; ?>"
+                                        ">
                                         
                                     </div>
                                 </td>
@@ -150,9 +172,15 @@
                                             <option value="">--เลือกระดับสิทธิ์ของผู้ใช้--</option>
                                             <?php
                                                 foreach($permis as $permi ) {
-                                                    echo "<option value='{$permi['permission_id']}'>
-                                                            {$permi['permission_title']}
-                                                          </option>";  
+                                                    if($permi['permission_id'] == $x['permission_id']) {
+                                                        echo "<option value='{$permi['permission_id']}'selected>
+                                                                {$permi['permission_title']} 
+                                                              </option>";  
+                                                    } else {
+                                                        echo "<option value='{$permi['permission_id']}' >
+                                                                {$permi['permission_title']} 
+                                                              </option>";  
+                                                    }
                                                 }     
                                             ?>
                                         </select>
@@ -163,7 +191,7 @@
 
                             <tr>
                                 <td colspan="3" class="center aligned collapsing">
-                                    <input class="ui button green" type="submit" name="submit" id="submit" value="SUBMIT">
+                                    <input class="ui button green" type="submit" name="submit" id="submit" value="อัพเดท">
                                 </td>
                             </tr>
                         

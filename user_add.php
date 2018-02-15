@@ -52,11 +52,7 @@
                 $insertState = createUser($conn, $uid, $pwd, $t_name, $f_name, $l_name, $per);
                 //echo $x;
             }
-            
-            
-            
-            
-            
+
             //echo "<br>";
             //echo $uid ;
             //echo "<br>";
