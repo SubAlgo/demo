@@ -1,7 +1,7 @@
 <div class="ui menu">
     <a href="admin.php" class="item"><b>หน้าหลัก admin</b></a>
     <a href="usermanage.php" class="item"><b>จัดการผู้ใช้</b></a>
-    <a class="item"><b>จัดการโครงการ/รายการ</b></a>
+    <a href="projectmanage.php"class="item"><b>จัดการโครงการ/รายการ</b></a>
     <div class="right menu">
 
       <div class="item">
