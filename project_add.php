@@ -38,33 +38,91 @@
             <div class="ui container">
                 <div>
                     <form class="ui form">
-                        <div class="inline fields">
-                            <div class="ten wide field">
-                                <label>หน่วยเสนอความต้องการ</label>
-                                <input type="text" name="" id="" placeholder="หน่วยเสนอความต้องการ">
-                            </div>
-                           
+                        <h2 class="ui dividing header">บันทึกโครงการ</h2>
+
+                        <!-- row1 -->
+                        <div class="fields">
                             <div class="eight wide field">
-                                <label>ประเภทงาน</label>
-                                <input type="text" placeholder="Middle Name">
+                                <label>หน่วยเสนอความต้องการ</label>
+                                <input type="text" name="" id="" placeholder="หน่วยเสนอความต้องการ...">
                             </div>
-                            
                         </div>
 
+                        <!-- row2 -->
                         <div class="fields">
-                            <div class="field">
-                              <label>First name</label>
-                              <input type="text" placeholder="First Name">
-                            </div>
-                            <div class="field">
-                              <label>Middle name</label>
-                              <input type="text" placeholder="Middle Name">
-                            </div>
-                            <div class="field">
-                              <label>Last name</label>
-                              <input type="text" placeholder="Last Name">
+
+                            <!-- ที่หนังสือ -->
+                            <div class="eight wide field">
+                                <label>ที่หนังสือ</label>
+                                <input type="text" name="card[number]" maxlength="16" placeholder="ที่หนังสือ...">
                             </div>
                         </div>
+
+                        <!-- row3 -->
+                        <label><b>ลงวันที่</b></label>
+                        <div class="inline fields">
+                            <!-- วันที่ -->
+                            <div class="two wide field">
+                                <select class="ui fluid search dropdown" name="d">
+                                    <option value="">วันที่</option>
+                                    <?php
+                                        for($i=1; $i<=31; $i++) {
+                                            echo "<option value='{$i}'>{$i}</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            
+                            <!-- เดือน -->
+                            <div class="three wide field">
+                                <label>เดือน</label>
+                                <select class="ui fluid search dropdown" name="month">
+                                    <option value="">เดือน</option>
+                                    <option value="1">มกราคม</option>
+                                    <option value="2">กุมภาพันธ์</option>
+                                    <option value="3">มีนาคม</option>
+                                    <option value="4">เมษายน</option>
+                                    <option value="5">พฤษภาคม</option>
+                                    <option value="6">มิถุนาคม</option>
+                                    <option value="7">กรกฎาคม</option>
+                                    <option value="8">สิงหาคม</option>
+                                    <option value="9">กันยายน</option>
+                                    <option value="10">ตุลาคม</option>
+                                    <option value="11">พฤศจิกายน</option>
+                                    <option value="12">ธันวาคม</option>
+                                </select>      
+                            </div>
+
+                            <!-- ปี -->
+                            <div class="three wide field">
+                                <label>ปี</label>
+                                <div class="field">
+                                    <input type="text" name="card[expire-year]" maxlength="4" placeholder="ปี (พ.ศ.)">
+                                </div>    
+                            </div>
+
+                        </div>
+                            
+
+                            
+                            
+                            
+                            
+                            
+
+                            
+                            
+
+                        <?php
+                            $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+                            //echo "Today is " . date("Y/m/d") . "<br>";
+                            $date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
+                            echo $date1->format('d-m-Y');
+                            echo "<br>";
+                            $date1->modify('+15 day');
+                            echo $date1->format('d-m-Y');
+                        ?>
+                     
                     </form>
                 </div>
             </div>
