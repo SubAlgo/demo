@@ -42,6 +42,44 @@
                         เพิ่มโครงการ
                     </a>
                 </div>
+                <br>
+
+                <div>
+                    <a href="./projectmanage.php?u=1" class="ui labeled icon button blue">
+                        <i class="right search icon"></i>
+                        โครงการซื้อ
+                    </a>
+                    <a href="./projectmanage.php?u=2" class="ui labeled icon button blue">
+                        <i class="right search icon"></i>
+                        โครงการจ้าง
+                    </a>
+                   <?php
+                        $p = 1;
+                        if (isset($_GET['u']) ) {
+                            $p = $_GET['u'];
+                        }
+                        $sql = "SELECT projectName, projectBudget FROM project WHERE projecttype_id = '{$p}'";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            // output data of each row
+                            while($row = $result->fetch_assoc()) {
+                                echo "projectName :  {$row['projectName']} | projectBudget: {$row['projectBudget']} <br>";
+                                if(strlen($row['projectBudget']) <= 0){
+                                    echo "x = 0 <br>";
+                                } else {
+                                    $x = $row['projectBudget'] + 100;
+                                    echo "x = {$x} <br>";
+                                }
+                                
+                            }
+                        } else {
+                            echo "0 results";
+                        }
+                        $conn->close();
+                   ?>
+                </div>
+                <br>
                 
 
 
