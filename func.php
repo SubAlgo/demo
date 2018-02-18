@@ -223,6 +223,92 @@
         $conn->close();
     }
     
+    //function addProject
+    function addProject($conn,          $projectName,   $bookNo,            $projectAt,         $projectType, 
+                        $projectBudget, $budgetCheck,   $principleApprove,  $processApprove, 
+                        $tntCheck,      $orderNo,       $orderAt,           $orderDelivery,     $orderDeadline, 
+                        $promiseNo ,    $promiseAt,     $promiseDelivery,   $promiseDeadline, 
+                        $budgetBinding, $checked,       $withdraw,          $projectStatus) 
+                        {
+        if( strlen(trim($projectName)) <= 0 ) {
+            return 2;
+        }
+
+        // set orderDeadline
+        // if $orderAt is not null && $orderDelivery is integer
+        // Do ...
+        if( strlen($orderAt) > 0 && is_numeric($orderDelivery) ) {
+                //echo $orderDeadline;
+        }
+        // set promiseDeadline
+        // if $promiseAt is not null && $promiseDelivery is integer
+        // Do ...
+        if( strlen($promiseAt) > 0 && is_numeric($promiseDelivery) ) {
+            $promAt = DateTime::createFromFormat('Y-m-d', $promiseAt);
+            //echo $promAt->format('Y-m-d');
+            //echo "<br>";
+            $promiseDeliveryPlus = "+{$promiseDelivery} day"; //"+5 day"
+            $promAt->modify($promiseDeliveryPlus);
+            $promiseDeadline =  $promAt->format('Y-m-d');
+           // echo $promiseDeadline;
+        }
+            
+        $sql = "INSERT INTO `project` (
+                                        `project_id`,
+                                        `projectName`,
+                                        `bookNo`,
+                                        `projectAt`,
+                                        `projecttype_id`,
+                                        `projectBudget`,
+                                        `budgetCheck`,
+                                        `principleApprove`,
+                                        `processApprove`,
+                                        `tntCheck`,
+                                        `orderNo`,
+                                        `orderAt`,
+                                        `orderDelivery`,
+                                        `orderDeadline`,
+                                        `promiseNo`,
+                                        `promiseAt`,
+                                        `promiseDelivery`,
+                                        `promiseDeadline`,
+                                        `budgetBinding`,
+                                        `checked`,
+                                        `withdraw`,
+                                        `projectStatus`
+                                      )
+                VALUES(
+                        NULL,
+                        '{$projectName     }',
+                        '{$bookNo          }',
+                        '{$projectAt       }',
+                        '{$projectType     }', 
+                        '{$projectBudget   }',
+                        '{$budgetCheck     }',
+                        '{$principleApprove}',
+                        '{$processApprove  }',
+                        '{$tntCheck        }',
+                        '{$orderNo         }',
+                        '{$orderAt         }',
+                        '{$orderDelivery   }',
+                        '{$orderDeadline   }',
+                        '{$promiseNo       }',
+                        '{$promiseAt       }',
+                        '{$promiseDelivery }',
+                        '{$promiseDeadline }',
+                        '{$budgetBinding   }',
+                        '{$checked         }',
+                        '{$withdraw        }',
+                        '{$projectStatus   }'
+                    )";
+
+        if ($conn->query($sql) === TRUE) {
+            return 1;
+        } else {
+            return "Error: " . $sql . "<br>" . $conn->error;
+        }
+        $conn->close();
+    }
 
 
     

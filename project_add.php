@@ -7,64 +7,75 @@
 
     <?php include_once 'inc.php' ?>
 
+    <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
+    <?php
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: //{$path}/index.php");
+            die();
+        }
+    ?>
+
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            echo "<br>";
-            echo "หน่วยเสนอความต้อง : {$_POST['projectName']}";  
-            echo "<br>";       
-            echo "เลขที่หนังสือ : {$_POST['bookNo']}";
-            echo "<br>";
-            echo "วันที่ลงหนังสือ : {$_POST['projectAt']}";
-            echo "<br>";
-            echo "ประเภทงาน : {$_POST['projectType']}";
-            echo "<br>";
-            echo "จำนวนเงินงบประมาณ : {$_POST['projectBudget']}";
-            echo "<br>";
-            echo "ตรวจงบประมาณ : {$_POST['budgetCheck']}";
-            echo "<br>";
-            echo "อนุมัติหลักการ : {$_POST['principleApprove']}";
-            echo "<br>";
-            echo "อนุมัติ ซื้อ - จ้าง : {$_POST['processApprove']}";
-            echo "<br>";
-            echo "ตรวจร่าง นธน : {$_POST['tntCheck']}";
-            echo "<br>";
-            echo "ใบสั่งซื้อ ที่ : {$_POST['orderNo']}";
-            echo "<br>";
-            echo "ลงวันที่ใบสั่งซื้อ - จ้าง : {$_POST['orderAt']}";
-            echo "<br>";
-            echo "กำหนดส่งมอบ(ใบสั่งซื้อ) : {$_POST['orderDelivery']}";
-            echo "<br>";
-            echo "สัญญาจ้างที่ : {$_POST['promiseNo']}";
-            echo "<br>";
-            echo "ลงวันที่ สัญญาจ้าง : {$_POST['promiseAt']}";
-            echo "<br>";
-            echo "กำหนดส่งมอบ : {$_POST['promiseDelivery']}";
-            echo "<br>";
-            echo "ผูกพันงบประมาณ : {$_POST['budgetBinding']}";
-            echo "<br>";
-            echo "ตรวจรับ : {$_POST['checked']}";
-            echo "<br>";
-            echo "ส่งขอเบิกเงิน : {$_POST['withdraw']}";
-            echo "<br>";
+            
+            $projectName        =   $_POST['projectName'];
+            $bookNo             =   $_POST['bookNo'];
+            $projectAt          =   $_POST['projectAt'];
+            $projectType        =   $_POST['projectType'];
+            $projectBudget      =   $_POST['projectBudget'];
+            $budgetCheck        =   $_POST['budgetCheck'];
+            $principleApprove   =   $_POST['principleApprove'];
+            $processApprove     =   $_POST['processApprove'];
+            $tntCheck           =   $_POST['tntCheck'];
+            $orderNo            =   $_POST['orderNo'];
+            $orderAt            =   $_POST['orderAt'];
+            $orderDelivery      =   $_POST['orderDelivery'];
+            $orderDeadline      =   "";
+            $promiseNo          =   $_POST['promiseNo'];
+            $promiseAt          =   $_POST['promiseAt'];
+            $promiseDelivery    =   $_POST['promiseDelivery'];
+            $promiseDeadline    =   "";
+            $budgetBinding      =   $_POST['budgetBinding'];
+            $checked            =   $_POST['checked'];
+            $withdraw           =   $_POST['withdraw'];
+            $projectStatus      =   1;
 
-            $strD = ($_POST['projectAt']);
-            echo strlen($strD);
-            if(strlen($strD) >0 ){
-                echo "มีค่า";
+            
+            
+            
+
+            $ap = addProject($conn,     $projectName,   $bookNo,            $projectAt,         $projectType, 
+                            $projectBudget, $budgetCheck,   $principleApprove,  $processApprove, 
+                            $tntCheck,      $orderNo,       $orderAt,           $orderDelivery,     $orderDeadline, 
+                            $promiseNo ,    $promiseAt,     $promiseDelivery,   $promiseDeadline, 
+                            $budgetBinding, $checked,       $withdraw,          $projectStatus);
+
+            if ($ap == 1 ) {
+                unset($_POST);
+                $_POST = array();
+                echo '<script language="javascript">';
+                echo "alert('บันทึกโครงการเรียบร้อยแล้ว')";
+               
+                echo '</script>';
+                
+                
+            }   else {
+                echo '<script language="javascript">';
+                echo "alert('บันทึกโครงการผิดพลาด !!!')";
+               
+                echo '</script>';
             }
-            $date2 = DateTime::createFromFormat('Y-m-d', $_POST['projectAt']);
-                            echo $date2->format('Y-m-d');
-                            echo "<br>";
-                            $date2->modify('+15 day');
-                            echo $date2->format('Y-m-d');
+            //refresh เพื่อ clear method post ให้เป็น get
+            header( "refresh: 1; url=//{$path}/project_add.php" ); 
+
         }
        
     ?>
 
 
-    <title>หน้าหลัก</title>
+    <title>เพิ่มโครงการ</title>
     
 </head>
 <body>
@@ -95,7 +106,7 @@
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>หน่วยเสนอความต้องการ</label>
-                                <input type="text" name="projectName" id="projectName" placeholder="หน่วยเสนอความต้องการ...">
+                                <input type="text" name="projectName" id="projectName" Required placeholder="หน่วยเสนอความต้องการ...">
                             </div>
                         </div>
 

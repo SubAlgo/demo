@@ -5,7 +5,7 @@ CREATE TABLE project_status(
 ) ENGINE = InnoDB;
 
 INSERT INTO `project_status`(`status_id`, `status_title`)
-VALUES('1', 'อยู่ระหว่างดำเนินการ'),('2', 'ดำเนินการเสร็จสิ้น')
+VALUES('1', 'อยู่ระหว่างดำเนินการ'),('2', 'ดำเนินการเสร็จสิ้น');
 
 
 CREATE TABLE project(
