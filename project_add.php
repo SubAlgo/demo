@@ -10,16 +10,59 @@
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            echo "<br>";
+            echo "หน่วยเสนอความต้อง : {$_POST['projectName']}";  
+            echo "<br>";       
+            echo "เลขที่หนังสือ : {$_POST['bookNo']}";
+            echo "<br>";
+            echo "วันที่ลงหนังสือ : {$_POST['projectAt']}";
+            echo "<br>";
+            echo "ประเภทงาน : {$_POST['projectType']}";
+            echo "<br>";
+            echo "จำนวนเงินงบประมาณ : {$_POST['projectBudget']}";
+            echo "<br>";
+            echo "ตรวจงบประมาณ : {$_POST['budgetCheck']}";
+            echo "<br>";
+            echo "อนุมัติหลักการ : {$_POST['principleApprove']}";
+            echo "<br>";
+            echo "อนุมัติ ซื้อ - จ้าง : {$_POST['processApprove']}";
+            echo "<br>";
+            echo "ตรวจร่าง นธน : {$_POST['tntCheck']}";
+            echo "<br>";
+            echo "ใบสั่งซื้อ ที่ : {$_POST['orderNo']}";
+            echo "<br>";
+            echo "ลงวันที่ใบสั่งซื้อ - จ้าง : {$_POST['orderAt']}";
+            echo "<br>";
+            echo "กำหนดส่งมอบ(ใบสั่งซื้อ) : {$_POST['orderDelivery']}";
+            echo "<br>";
+            echo "สัญญาจ้างที่ : {$_POST['promiseNo']}";
+            echo "<br>";
+            echo "ลงวันที่ สัญญาจ้าง : {$_POST['promiseAt']}";
+            echo "<br>";
+            echo "กำหนดส่งมอบ : {$_POST['promiseDelivery']}";
+            echo "<br>";
+            echo "ผูกพันงบประมาณ : {$_POST['budgetBinding']}";
+            echo "<br>";
+            echo "ตรวจรับ : {$_POST['checked']}";
+            echo "<br>";
+            echo "ส่งขอเบิกเงิน : {$_POST['withdraw']}";
+            echo "<br>";
+
+            $strD = ($_POST['projectAt']);
+            echo strlen($strD);
+            if(strlen($strD) >0 ){
+                echo "มีค่า";
+            }
+            $date2 = DateTime::createFromFormat('Y-m-d', $_POST['projectAt']);
+                            echo $date2->format('Y-m-d');
+                            echo "<br>";
+                            $date2->modify('+15 day');
+                            echo $date2->format('Y-m-d');
+        }
        
     ?>
 
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet" type="text/css" />
-<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css" />
-<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js"></script>
-<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js"></script>
-  
 
     <title>หน้าหลัก</title>
     
@@ -44,7 +87,7 @@
         <div class="ui vertical stripe segment">
             <div class="ui container">
                 <div>
-                    <form class="ui form">
+                    <form class="ui form" method="post">
                         <h2 class="ui dividing header">บันทึกโครงการ</h2>
 
                         <!-- row1 -->
@@ -52,20 +95,40 @@
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>หน่วยเสนอความต้องการ</label>
-                                <input type="text" name="" id="" placeholder="หน่วยเสนอความต้องการ...">
+                                <input type="text" name="projectName" id="projectName" placeholder="หน่วยเสนอความต้องการ...">
                             </div>
                         </div>
 
 
                         <hr>
                         <!-- row2 -->
+                       <!-- เลขที่หนังสือ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label>เลขที่หนังสือ</label>
+                                <input type="text" name="bookNo" id="bookNo" placeholder="ที่หนังสือ...">
+                            </div>
+                            <div class="eight wide field">
+                                <label>ลงวันที่ (ปี ค.ศ.)</label>
+                                <div class="two fields">
+                                    <div class="field">
+                                        <input type="date" name="projectAt" id="projectAt">
+                                    </div>
+                                                                 
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row3 -->
                         <!-- ประเภทงาน -->
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>ปรเภทงาน</label>
-                                <select class="ui fluid search dropdown" name="d">
+                                <select class="ui fluid search dropdown" name="projectType">
                                     <option value="1">งานซื้อ</option>
-                                    <option value="/">งานจ้าง</option>
+                                    <option value="2">งานจ้าง</option>
                                 </select>
 
                             </div>
@@ -73,43 +136,20 @@
 
 
                         <hr>
-                        <!-- row3 -->
-                       <!-- เลขที่หนังสือ -->
-                        <div class="fields">
-                            <div class="eight wide field">
-                                <label>เลขที่หนังสือ</label>
-                                <input type="text" name="" id="" placeholder="ที่หนังสือ...">
-                            </div>
-                            <div class="eight wide field">
-                                <label>ลงวันที่ (วัน-เดือน-ปี)</label>
-                                <div class="two fields">
-                                    <div class="field">
-                                        <input type="date" name="" id="">
-                                    </div>
-                                    <div class="field">
-                                        2
-                                    </div>                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
                         <!-- row4 -->
                         <!-- งบประมาณ -->
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>จำนวนเงินงบประมาณ</label>
-                                <input type="text" name="" id="" placeholder="จำนวนเงิน...(บาท)">
+                                <input type="text" name="projectBudget" id="projectBudget" placeholder="จำนวนเงิน...(บาท)">
                             </div>
                             <div class="eight wide field">
-                                <label>ตรวจสอบงบประมาณเมื่อ :</label>
+                                <label>ตรวจสอบงบประมาณเมื่อ (ปี ค.ศ.)</label>
                                 <div class="two fields">
                                     <div class="field">
-                                        <input type="date" name="" id="">
+                                        <input type="date" name="budgetCheck" id="budgetCheck">
                                     </div>
-                                    <div class="field">
-                                        2
-                                    </div>                                    
+                                                                      
                                 </div>
                             </div>
                         </div>
@@ -117,14 +157,14 @@
                         <hr>
                         <!-- row5 -->
                         <!-- อนุมัติหลักการ -->
-                        <div class="fields">
-                            
+                        <div class="fields">  
                             <div class="eight wide field">
-                                <label>อนุมัติหลักการ เมื่อ :</label>
+                                <label>อนุมัติหลักการเมื่อ (ปี ค.ศ.)</label>
                                 <div class="fields">
-                                    <input type="date" name="" id="">
+                                    <input type="date" name="principleApprove" id="principleApprove">
                                 </div>
                             </div>
+                            
                         </div>
 
 
@@ -133,15 +173,11 @@
                         <!-- อนุมัติ ซื้อ-จ้าง เมื่อ -->
                         <div class="fields">
                             <div class="eight wide field">
-                                <label>อนุมัติ ซื้อ-จ้าง เมื่อ</label>
+                                <label>อนุมัติ ซื้อ-จ้าง (ปี ค.ศ.)</label>
                                 <div class="fields">
-                                    <input type="date" name="" id="">
+                                    <input type="date" name="processApprove" id="processApprove">
                                 </div>
                             </div>
-                            <div class="eight wide field">
-                                            
-                            </div>
-                            
                         </div>
 
 
@@ -151,39 +187,11 @@
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>ตรวจร่าง นธน.ฯ เมื่อ :</label>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="d">
-                                            <option value="">วันที่</option>
-                                            <?php
-                                                for($i=1; $i<=31; $i++) {
-                                                    echo "<option value='{$i}'>{$i}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="month">
-                                            <option value="">เดือน</option>
-                                            <option value="1">มกราคม</option>
-                                            <option value="2">กุมภาพันธ์</option>
-                                            <option value="3">มีนาคม</option>
-                                            <option value="4">เมษายน</option>
-                                            <option value="5">พฤษภาคม</option>
-                                            <option value="6">มิถุนาคม</option>
-                                            <option value="7">กรกฎาคม</option>
-                                            <option value="8">สิงหาคม</option>
-                                            <option value="9">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" name="" id="" maxlength="4" placeholder="ปี พ.ศ. [ตัวอย่าง: 2561]">
-                                    </div>
+                                <div class="fields">
+                                    <input type="date" name="tntCheck" id="tntCheck">
                                 </div>
                             </div>
+                            
                         </div>
 
 
@@ -193,48 +201,17 @@
                         <div class="fields">
                             <div class="four wide field">
                                 <label>ใบสั่งซื้อ - สั่งจ้าง ที่</label>
-                                <input type="text" name="" id="" placeholder="เลขที่ใบสั่งซือ - สั่งจ้าง">
+                                <input type="text" name="orderNo" id="orderNo" placeholder="เลขที่ใบสั่งซือ - สั่งจ้าง">
                             </div>
 
                             <div class="eight wide field">
-                                <label>ลงวันที่</label>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="d">
-                                            <option value="">วันที่</option>
-                                            <?php
-                                                for($i=1; $i<=31; $i++) {
-                                                    echo "<option value='{$i}'>{$i}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="month">
-                                            <option value="">เดือน</option>
-                                            <option value="1">มกราคม</option>
-                                            <option value="2">กุมภาพันธ์</option>
-                                            <option value="3">มีนาคม</option>
-                                            <option value="4">เมษายน</option>
-                                            <option value="5">พฤษภาคม</option>
-                                            <option value="6">มิถุนาคม</option>
-                                            <option value="7">กรกฎาคม</option>
-                                            <option value="8">สิงหาคม</option>
-                                            <option value="9">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" name="" id="" maxlength="4" placeholder="ปี พ.ศ. [ตัวอย่าง: 2561]">
-                                    </div>
-                                </div>
+                                <label>ลงวันที่ (ปี ค.ศ.)</label>
+                                <input type="date" name="orderAt" id="orderAt">                       
                             </div>
 
                             <div class="four wide field">
                                 <label>กำหนดส่งมอง (วัน)</label>
-                                <input type="text" name="" id="" placeholder="กำหนดส่งมอบ">
+                                <input type="text" name="orderDelivery" id="orderDelivery" placeholder="กำหนดส่งมอบ">
                             </div>
                         </div>
 
@@ -245,48 +222,17 @@
                         <div class="fields">
                             <div class="four wide field">
                                 <label>สัญญาซื้อ - สั่งจ้าง ที่</label>
-                                <input type="text" name="" id="" placeholder="เลขที่สัญญาซื้อ - สั่งจ้าง">
+                                <input type="text" name="promiseNo" id="promiseNo" placeholder="เลขที่สัญญาซื้อ - สั่งจ้าง">
                             </div>
 
                             <div class="eight wide field">
-                                <label>ลงวันที่</label>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="d">
-                                            <option value="">วันที่</option>
-                                            <?php
-                                                for($i=1; $i<=31; $i++) {
-                                                    echo "<option value='{$i}'>{$i}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="month">
-                                            <option value="">เดือน</option>
-                                            <option value="1">มกราคม</option>
-                                            <option value="2">กุมภาพันธ์</option>
-                                            <option value="3">มีนาคม</option>
-                                            <option value="4">เมษายน</option>
-                                            <option value="5">พฤษภาคม</option>
-                                            <option value="6">มิถุนาคม</option>
-                                            <option value="7">กรกฎาคม</option>
-                                            <option value="8">สิงหาคม</option>
-                                            <option value="9">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" name="" id="" maxlength="4" placeholder="ปี พ.ศ. [ตัวอย่าง: 2561]">
-                                    </div>
-                                </div>
+                                <label>ลงวันที่ (ปี ค.ศ.)</label>
+                                <input type="date" name="promiseAt" id="promiseAt">                       
                             </div>
 
                             <div class="four wide field">
                                 <label>กำหนดส่งมอง (วัน)</label>
-                                <input type="text" name="" id="" placeholder="กำหนดส่งมอบ">
+                                <input type="text" name="promiseDelivery" id="promiseDelivery" placeholder="กำหนดส่งมอบ">
                             </div>
                         </div>
 
@@ -296,39 +242,8 @@
                         <!-- ผูกพันงบประมาณ -->
                         <div class="fields">
                             <div class="eight wide field">
-                                <label>ผูกพันงบประมาณ เมื่อ :</label>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="d">
-                                            <option value="">วันที่</option>
-                                            <?php
-                                                for($i=1; $i<=31; $i++) {
-                                                    echo "<option value='{$i}'>{$i}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="month">
-                                            <option value="">เดือน</option>
-                                            <option value="1">มกราคม</option>
-                                            <option value="2">กุมภาพันธ์</option>
-                                            <option value="3">มีนาคม</option>
-                                            <option value="4">เมษายน</option>
-                                            <option value="5">พฤษภาคม</option>
-                                            <option value="6">มิถุนาคม</option>
-                                            <option value="7">กรกฎาคม</option>
-                                            <option value="8">สิงหาคม</option>
-                                            <option value="9">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" name="" id="" maxlength="4" placeholder="ปี พ.ศ. [ตัวอย่าง: 2561]">
-                                    </div>
-                                </div>
+                                <label>ผูกพันงบประมาณเมื่อ (ปี ค.ศ.)</label>
+                                <input type="date" name="budgetBinding" id="budgetBinding">                       
                             </div>
                         </div>
 
@@ -338,39 +253,8 @@
                         <!-- ตรวจรับ เมื่อ: -->
                         <div class="fields">
                             <div class="eight wide field">
-                                <label>ตรวจรับ เมื่อ :</label>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="d">
-                                            <option value="">วันที่</option>
-                                            <?php
-                                                for($i=1; $i<=31; $i++) {
-                                                    echo "<option value='{$i}'>{$i}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="month">
-                                            <option value="">เดือน</option>
-                                            <option value="1">มกราคม</option>
-                                            <option value="2">กุมภาพันธ์</option>
-                                            <option value="3">มีนาคม</option>
-                                            <option value="4">เมษายน</option>
-                                            <option value="5">พฤษภาคม</option>
-                                            <option value="6">มิถุนาคม</option>
-                                            <option value="7">กรกฎาคม</option>
-                                            <option value="8">สิงหาคม</option>
-                                            <option value="9">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" name="" id="" maxlength="4" placeholder="ปี พ.ศ. [ตัวอย่าง: 2561]">
-                                    </div>
-                                </div>
+                                <label>ตรวจรับเมื่อ (ปี ค.ศ.)</label>
+                                <input type="date" name="checked" id="checked"> 
                             </div>
                         </div>
 
@@ -379,41 +263,19 @@
                         <!-- ส่งขอเบิกเงิน เมื่อ: -->
                         <div class="fields">
                             <div class="eight wide field">
-                                <label>ส่งขอเบิกเงิน เมื่อ :</label>
-                                <div class="three fields">
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="d">
-                                            <option value="">วันที่</option>
-                                            <?php
-                                                for($i=1; $i<=31; $i++) {
-                                                    echo "<option value='{$i}'>{$i}</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <select class="ui fluid search dropdown" name="month">
-                                            <option value="">เดือน</option>
-                                            <option value="1">มกราคม</option>
-                                            <option value="2">กุมภาพันธ์</option>
-                                            <option value="3">มีนาคม</option>
-                                            <option value="4">เมษายน</option>
-                                            <option value="5">พฤษภาคม</option>
-                                            <option value="6">มิถุนาคม</option>
-                                            <option value="7">กรกฎาคม</option>
-                                            <option value="8">สิงหาคม</option>
-                                            <option value="9">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" name="" id="" maxlength="4" placeholder="ปี พ.ศ. [ตัวอย่าง: 2561]">
-                                    </div>
-                                </div>
+                                <label>ส่งขอเบิกเงินเมื่อ (ปี ค.ศ.)</label>
+                                 <input type="date" name="withdraw" id="withdraw"> 
                             </div>
                         </div>
+
+
+                        <hr>
+                        
+                        <div class="field" align="center">
+                            <input type="submit" class="ui button positive" value="บันทึก" name="" id="">
+                            <input type="button" class="ui button negative" value="ยกเลิก" name="" id="">
+                        </div>
+                        
 
                         
 

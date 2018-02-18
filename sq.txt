@@ -1,0 +1,37 @@
+CREATE TABLE project_status(
+    status_id int NOT NULL,
+    status_title VARCHAR(50),
+    PRIMaRY KEY(status_id)
+) ENGINE = InnoDB;
+
+INSERT INTO `project_status`(`status_id`, `status_title`)
+VALUES('1', 'อยู่ระหว่างดำเนินการ'),('2', 'ดำเนินการเสร็จสิ้น')
+
+
+CREATE TABLE project(
+    `project_id` INT NOT NULL AUTO_INCREMENT,
+    `projectName` VARCHAR(200) NOT NULL,
+    `bookNo` VARCHAR(100) NULL,
+    `projectAt` DATE NULL,
+    `projecttype_id` INT NULL,
+    `projectBudget` FLOAT NULL,
+    `budgetCheck` DATE NULL,
+    `principleApprove` DATE NULL,
+    `processApprove` DATE NULL,
+    `tntCheck` DATE NULL,
+    `orderNo` VARCHAR(100) NULL,
+    `orderAt` DATE NULL,
+    `orderDelivery` INT NULL,
+    `orderDeadline` DATE NULL,
+    `promiseNo` VARCHAR(100) NULL,
+    `promiseAt` DATE NULL,
+    `promiseDelivery` INT NULL,
+    `promiseDeadline` DATE NULL,
+    `budgetBinding` DATE NULL,
+    `checked` DATE NULL,
+    `withdraw` DATE NULL,
+    `projectStatus` INT NULL,
+    PRIMARY KEY(`project_id`),
+    FOREIGN KEY(projecttype_id) REFERENCES project_type(projecttype_id),
+    FOREIGN KEY(projectStatus) REFERENCES project_status(status_id)
+) ENGINE = InnoDB;
