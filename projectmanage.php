@@ -7,6 +7,19 @@
 
     <?php include_once 'inc.php' ?>
 
+    <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
+    <?php
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: //{$path}/index.php");
+            die();
+        }
+    ?>
+    
+    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
+    <?php
+        include_once "./check_admin.php";
+    ?>
+
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
@@ -259,7 +272,7 @@
 
     <!-- FOOTER -->
         <?php
-        $conn->close();
+            $conn->close();
             include_once "./layout/foot.php";
         ?>
     <!-- FOOTER -->

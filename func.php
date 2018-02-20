@@ -328,6 +328,23 @@
         }
     }
 
+    //function getPermission($conn)
+    function renderSQL($conn, $sql) {
+        $x = array();
+
+        $result= $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+             while($row = $result->fetch_assoc()) {
+                $x[] = $row;
+             }
+             return $x;
+        }
+        return false;
+    }
+
+
+
 
     
 

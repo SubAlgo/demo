@@ -43,6 +43,7 @@
 
     <!-- FOOTER -->
         <?php
+            $conn->close();
             include_once "./layout/foot.php";
         ?>
     <!-- FOOTER -->
