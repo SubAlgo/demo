@@ -28,6 +28,34 @@
         $adminuser = countUser($conn, 1);
         $other_user = countUser($conn, 2);
         $super_user = countUser($conn, 3);
+
+        //------------------------โครงการระหว่างดำเนินงาน-----------------------
+        $projectInprocessAll = "SELECT COUNT(projectName) as returnVal FROM project WHERE projectStatus = '1'";
+        $projectInprocessAll = countProject($conn, $projectInprocessAll);
+
+        $projectInprocessBuy = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '1' && projectStatus = '1'";
+        $projectInprocessBuy = countProject($conn, $projectInprocessBuy);
+
+        $projectInprocessHire = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '2' && projectStatus = '1'";
+        $projectInprocessHire = countProject($conn, $projectInprocessHire);
+
+        $projectInprocessBudget = "SELECT SUM(projectbudget) as returnVal FROM project WHERE projectStatus = '1'";
+        $projectInprocessBudget = countProject($conn, $projectInprocessBudget);
+
+        //------------------------โครงการดำเนินงานเสร็จสิ้น-----------------------
+        $projectSuccessAll = "SELECT COUNT(projectName) as returnVal FROM project WHERE projectStatus = '2'";
+        $projectSuccessAll = countProject($conn, $projectSuccessAll);
+        
+        $projectSuccessBuy = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '1' && projectStatus = '2'";
+        $projectSuccessBuy = countProject($conn, $projectSuccessBuy);
+
+        $projectSuccessHire = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '2' && projectStatus = '2'";
+        $projectSuccessHire= countProject($conn, $projectSuccessHire);
+
+        $projectSuccessBudget = "SELECT SUM(projectbudget) as returnVal FROM project WHERE projectStatus = '2'";
+        $projectSuccessBudget = countProject($conn, $projectSuccessBudget);
+
+
         
     ?>
 
@@ -87,19 +115,19 @@
                     </tr>
                     <tr>
                         <td> โครงการทั้งหมด (ระหว่างดำเนินการ)</td>
-                        <td > <div align="center"> 10 โครงการ </div> </td>
+                        <td > <div align="center"> <?php echo $projectInprocessAll; ?> โครงการ </div> </td>
                     </tr>
                     <tr>
                         <td>โครงการจัดซื้อ (ระหว่างดำเนินการ)</td>
-                        <td> <div align="center"> 10 โครงการ </div></td>
+                        <td> <div align="center"> <?php echo $projectInprocessBuy; ?> โครงการ </div></td>
                     </tr>
                     <tr>
                         <td>โครงการจัดจ้าง (ระหว่างดำเนินการ)</td>
-                        <td> <div align="center"> 10 โครงการ </div></td>
+                        <td> <div align="center"> <?php echo $projectInprocessHire; ?> โครงการ </div></td>
                     </tr>
                     <tr>
                         <td>ยอดรวมงบประมาณ (ระหว่างดำเนินการ)</td>
-                        <td> <div align="center"> 100000 บาท </div></td>
+                        <td> <div align="center"> <?php echo $projectInprocessBudget; ?> บาท </div></td>
                     </tr>
 
                     <tr>
@@ -107,19 +135,19 @@
                     </tr>
                     <tr>
                         <td> โครงการทั้งหมด (ดำเนินการเสร็จสิ้น)</td>
-                        <td > <div align="center"> 10 โครงการ </div> </td>
+                        <td > <div align="center"> <?php echo $projectSuccessAll; ?> โครงการ </div> </td>
                     </tr>
                     <tr>
                         <td>โครงการจัดซื้อ (ดำเนินการเสร็จสิ้น)</td>
-                        <td> <div align="center"> 10 โครงการ </div></td>
+                        <td> <div align="center"> <?php echo $projectSuccessBuy; ?> โครงการ </div></td>
                     </tr>
                     <tr>
                         <td>โครงการจัดจ้าง (ดำเนินการเสร็จสิ้น)</td>
-                        <td> <div align="center"> 10 โครงการ </div></td>
+                        <td> <div align="center"> <?php echo $projectSuccessHire; ?> โครงการ </div></td>
                     </tr>
                     <tr>
                         <td>ยอดรวมงบประมาณ (ดำเนินการเสร็จสิ้น)</td>
-                        <td> <div align="center"> 100000 บาท </div></td>
+                        <td> <div align="center"> <?php echo $projectSuccessBudget; ?> บาท </div></td>
                     </tr>
                 </table>
                 

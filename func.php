@@ -310,6 +310,24 @@
         $conn->close();
     }
 
+    function countProject($conn, $sql) {
+        //ตัวอย่างหน้าตา $sql ที่รับมา
+        //"SELECT COUNT(projectName) as returnVal FROM project WHERE projectStatus = '1'";
+        $x ='';
+       
+        $result= $conn->query($sql);
+        if ($result->num_rows > 0) {
+             while($row = $result->fetch_assoc()) {
+                $x = $row['returnVal'];               
+             }
+        }
+        if ($x == 0 | $x == '') {
+            return '-';
+        }else {
+            return $x;
+        }
+    }
+
 
     
 
