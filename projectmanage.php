@@ -10,7 +10,60 @@
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
-        
+
+        /*  ---------------p Value ---------------------------------
+            p คือ ค่าที่จะใช้ในการกำหนดว่า จะ get value ของ projectType ไหน
+            ถ้า p = 1 จะ select ข้อมูลโปรเจค ประเภท "โครงการซื้อ"
+            ถ้า p = 2 จะ select ข้อมูลโปรเจค ประเภท "โครงการจ้าง"*/
+        $p = 1;
+        if (isset($_GET['u']) ) {
+            $p = $_GET['u'];
+        }
+
+
+        //SELECT SUM งบประมาณโครงการตาม projectType และ projectStatus
+        function getSum($conn, $p, $proStatus) {
+            $sqlsum = "SELECT SUM(projectbudget) as budget FROM project WHERE projecttype_id = '{$p}' && projectStatus = '{$proStatus}' ";
+            $projectbudget = $conn->query($sqlsum);
+            if ($projectbudget->num_rows > 0) {
+                while($row = $projectbudget->fetch_assoc()) {
+                    $budget = $row['budget'];
+                    return $budget;
+                }
+            }
+        }
+
+         //SELECT SUM งบประมาณโครงการทั้งหมดตาม projectType
+        function getSumAll($conn, $p) {
+            $sqlsum = "SELECT SUM(projectbudget) as budget FROM project WHERE projecttype_id = '{$p}' ";
+            $projectbudget = $conn->query($sqlsum);
+            if ($projectbudget->num_rows > 0) {
+                while($row = $projectbudget->fetch_assoc()) {
+                    $budget = $row['budget'];
+                    return $budget;
+                }
+            }
+        }
+
+        //ปรับ Format การแสดงผลของ วัน-เดือน-ปี
+        function condateFormate($x) {
+            if($x == "0000-00-00" || strlen($x)== 0) {
+                return "-";
+            }
+
+            $xx = explode("-", $x);
+            $date1 = DateTime::createFromFormat('Y-m-d', $x);
+            $date1->modify('+543 year');
+            return $date1->format('d-m-Y');
+        }
+
+        //ปรับ Format การแสดงผลของ งบประมาณ
+        function formatBudget($x) {
+            if($x == 0 || strlen($x) == 0) {
+                return '-';
+            }
+            return $x;
+        }
     ?>
 
     <title>จัดการโครงการ</title>
@@ -62,40 +115,12 @@
                         ค้นหาตามกำหนดสัญญา
                     </a>    
                    <?php
-                        $p = 1;
-                        if (isset($_GET['u']) ) {
-                            $p = $_GET['u'];
-                        }
-
-                        echo date("Y/m/d");
-
-                        $d1=strtotime("July 04");
-                        echo "d1 {$d1}";
                         
-                        $d2=ceil(($d1-time())/60/60/24);
-                        echo "<br>";
-                        echo "There are " . $d2 ." days until 4th of July.";
-                        
-                        $sqlsum = "SELECT SUM(projectbudget) as budget FROM project WHERE projecttype_id = '{$p}' ";
-                        $projectbudget = $conn->query($sqlsum);
-
-                        if ($projectbudget->num_rows > 0) {
-                            while($row = $projectbudget->fetch_assoc()) {
-                                $budget = $row['budget'];
-                            }
-                        }
-
-                        //Date compare
-                        $datetime2 = date_create('2009-10-11');
-                        $datetime1 = date_create('2009-10-13');
-                        $interval = date_diff($datetime1, $datetime2);
-                        
-                        echo "<br> ----- <br>";
-                        echo $interval->format('%R%a days ww');
                         
                    ?>
                     
-                    <div align="center"> 
+                    <div align="center">
+                    <p>
                         <h2>
                             <?php 
                                 if($p == 1) {
@@ -107,36 +132,10 @@
                         </h2>
                     </div>
                     
-
-
-                    <?php
-                        $q = "00-00-0000";
-                        if($q == "00-00-0000") {
-                            echo "Fuck";
-                        }
-                        $qq = explode("-", $q);
-                        echo $qq[0];
-                        echo "<br>";
-                        echo $qq[1];
-                        echo "<br>";
-                        echo $qq[2];
-                        echo "<br>";
-
-                        function condateFormate($x) {
-                            if($x == "0000-00-00") {
-                                return "-";
-                            }
-                            $xx = explode("-", $x);
-
-                            $date1 = DateTime::createFromFormat('Y-m-d', $x);
-                            $date1->modify('+543 year');
-                            return $date1->format('d-m-Y');
-                        }
-                        
-                        
-                    ?>
-                    
-                    <div align="right"><h4>งบประมาณรวม: <?php echo $budget; ?> บาท</h4></div>
+                    <div align="right"><h4>งบประมาณรวม: <?php echo getSumAll($conn, $p); ?> บาท</h4></div>
+                    <div>
+                        <h3>ระหว่างดำเนินการ [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 1)); ?> บาท]</h3>
+                    </div>
                     <table class="ui sixty column celled table">
                         <thead>
                             <tr>
@@ -153,7 +152,61 @@
 
                         <tbody>
                             <?php
-                                $sql = "SELECT projectName, orderDeadline, promiseDeadline, projectbudget FROM project WHERE projecttype_id = '{$p}'";
+                                $sql = "SELECT  project_id, projectName, orderDeadline, promiseDeadline, projectbudget 
+                                        FROM    project 
+                                        WHERE   projecttype_id = '{$p}' && projectStatus = '1'";
+                                $result = $conn->query($sql);
+                            
+                                if ($result->num_rows > 0) {
+                                    $i = 1;
+                                    while($row = $result->fetch_assoc()) {
+                                        //projectName, orderDeadline, promiseDeadline, budget
+                                        $d = condateFormate($row['orderDeadline']);
+                                        if(strlen($row['promiseDeadline'])>0){
+                                            $d2 = condateFormate($row['promiseDeadline']);
+                                        } else {
+                                            $d2 = "-";
+                                        }
+                                        
+                                        echo "<tr>";
+                                        echo "<td> <div align='center'> {$i} </td>";
+                                        echo "<td colspan='4'> <div align='center'> {$row['projectName']} </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . condateFormate($row['orderDeadline']) . "</div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . formatBudget($row['projectbudget']) . "</div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
+                                        echo "</tr>";
+                                        $i++;
+                                    }
+                                }
+                                
+                            ?>
+                            
+                        </tbody>    
+                   </table>
+
+                   <div><h3>ดำเนินการเสร็จสิ้น [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 2)); ?> บาท]</h3></div>
+                   <table class="ui sixty column celled table">
+                        <thead>
+                            <tr>
+                                <th> <div align="center"> ลำดับ</th>
+                                <th colspan='4'> <div align="center"> รายการโครงการ </div> </th>
+                                <th colspan='2'> <div align="center"> กำหนดส่งมอบ </div> </th>
+                                <th colspan='2'> <div align="center"> กำหนดสัญญา </div> </th>
+                                <th colspan='2'> <div align="center"> งบประมาณ </div> </th>
+                                <th colspan='2'> <div align="center"> แสดง </div> </th>
+                                <th colspan='2'> <div align="center"> แก้ไข </div> </th>
+                                <th colspan='2'> <div align="center"> ลบ </div> </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                                $sql = "SELECT  project_id, projectName, orderDeadline, promiseDeadline, projectbudget 
+                                        FROM    project 
+                                        WHERE   projecttype_id = '{$p}' && projectStatus = '2'";
                                 $result = $conn->query($sql);
                             
                                 if ($result->num_rows > 0) {
@@ -173,18 +226,17 @@
                                         echo "<td colspan='2'> <div align='center'>". condateFormate($row['orderDeadline']) . "</div> </td>";
                                         echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
                                         echo "<td colspan='2'> <div align='center'> {$row['projectbudget']} </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> แสดง </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> แก้ไข </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> ลบ </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
                                         echo "</tr>";
                                         $i++;
                                     }
                                 }
-                                $conn->close();
+                                
                             ?>
                             
-                        </tbody>
-                        
+                        </tbody>    
                    </table>
                 </div>
                 <br>
@@ -198,6 +250,7 @@
 
     <!-- FOOTER -->
         <?php
+        $conn->close();
             include_once "./layout/foot.php";
         ?>
     <!-- FOOTER -->
