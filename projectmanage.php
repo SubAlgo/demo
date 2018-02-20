@@ -23,7 +23,9 @@
 
         //SELECT SUM งบประมาณโครงการตาม projectType และ projectStatus
         function getSum($conn, $p, $proStatus) {
-            $sqlsum = "SELECT SUM(projectbudget) as budget FROM project WHERE projecttype_id = '{$p}' && projectStatus = '{$proStatus}' ";
+            $sqlsum = " SELECT SUM(projectbudget) as budget 
+                        FROM project 
+                        WHERE projecttype_id = '{$p}' && projectStatus = '{$proStatus}' ";
             $projectbudget = $conn->query($sqlsum);
             if ($projectbudget->num_rows > 0) {
                 while($row = $projectbudget->fetch_assoc()) {
@@ -132,10 +134,14 @@
                         </h2>
                     </div>
                     
-                    <div align="right"><h4>งบประมาณรวม: <?php echo getSumAll($conn, $p); ?> บาท</h4></div>
+                    <div align="right">
+                        <h4>งบประมาณรวม: <?php echo getSumAll($conn, $p); ?> บาท</h4>
+                    </div>
+
                     <div>
                         <h3>ระหว่างดำเนินการ [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 1)); ?> บาท]</h3>
                     </div>
+
                     <table class="ui sixty column celled table">
                         <thead>
                             <tr>
@@ -184,11 +190,14 @@
                                 
                             ?>
                             
-                        </tbody>    
-                   </table>
-
-                   <div><h3>ดำเนินการเสร็จสิ้น [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 2)); ?> บาท]</h3></div>
-                   <table class="ui sixty column celled table">
+                        </tbody>
+                    </table>
+                    
+                    <div>
+                        <h3>ดำเนินการเสร็จสิ้น [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 2)); ?> บาท]</h3>
+                    </div>
+                    
+                    <table class="ui sixty column celled table">
                         <thead>
                             <tr>
                                 <th> <div align="center"> ลำดับ</th>
