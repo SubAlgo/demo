@@ -170,8 +170,8 @@
                                         echo "<tr>";
                                         echo "<td> <div align='center'> {$i} </td>";
                                         echo "<td colspan='4'> <div align='center'> {$row['projectName']} </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'>". $d. "</div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> {$d2} </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>". condateFormate($row['orderDeadline']) . "</div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
                                         echo "<td colspan='2'> <div align='center'> {$row['projectbudget']} </div> </td>";
                                         echo "<td colspan='2'> <div align='center'> แสดง </div> </td>";
                                         echo "<td colspan='2'> <div align='center'> แก้ไข </div> </td>";
