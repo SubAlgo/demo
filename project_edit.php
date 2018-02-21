@@ -34,7 +34,7 @@
        
         $sql = "SELECT * FROM project WHERE project_id = '{$pid}'";
         
-        $x = renderSQL($conn, $sql);
+        $x = querySQL($conn, $sql);
 
         if($x == false) {
             header("Location: //{$path}/projectmanage.php");
@@ -64,9 +64,16 @@
             $checked            =   $_POST['checked'];
             $withdraw           =   $_POST['withdraw'];
             $projectStatus      =   $_POST['projectStatus'];
+
+            $ap = addProject($conn,         $projectName,   $bookNo,            $projectAt,         $projecttype_id, 
+                            $projectBudget, $budgetCheck,   $principleApprove,  $processApprove, 
+                            $tntCheck,      $orderNo,       $orderAt,           $orderDelivery,     $orderDeadline, 
+                            $promiseNo ,    $promiseAt,     $promiseDelivery,   $promiseDeadline, 
+                            $budgetBinding, $checked,       $withdraw,          $projectStatus);
         }
 
         //print_r($x);
+        //$x[0] คือ ค่าที่ได้มาจากการ select โดยเราจะค่า $x[0] ไปเก็บไว้ที่ $x เพื่อให้ง่ายเวลาเรียกใชข้อมูล จะได้ไม่ต้องพิมพ์ $x[0]['project_id']
         $x = $x[0];
 
         $project_id         = $x['project_id'];
