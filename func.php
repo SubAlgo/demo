@@ -350,7 +350,7 @@
     }
 
 
-    function editProject($conn,          $projectName,   $bookNo,            $projectAt,         $projecttype_id, 
+    function editProject($conn,         $pid,           $projectName,       $bookNo,            $projectAt,         $projecttype_id, 
                         $projectBudget, $budgetCheck,   $principleApprove,  $processApprove, 
                         $tntCheck,      $orderNo,       $orderAt,           $orderDelivery,     $orderDeadline, 
                         $promiseNo ,    $promiseAt,     $promiseDelivery,   $promiseDeadline, 
@@ -384,54 +384,30 @@
            // echo $promiseDeadline;
         }
             
-        $sql = "UPDATE `project` (
-                                       
-                                        `projectName`,
-                                        `bookNo`,
-                                        `projectAt`,
-                                        `projecttype_id`,
-                                        `projectBudget`,
-                                        `budgetCheck`,
-                                        `principleApprove`,
-                                        `processApprove`,
-                                        `tntCheck`,
-                                        `orderNo`,
-                                        `orderAt`,
-                                        `orderDelivery`,
-                                        `orderDeadline`,
-                                        `promiseNo`,
-                                        `promiseAt`,
-                                        `promiseDelivery`,
-                                        `promiseDeadline`,
-                                        `budgetBinding`,
-                                        `checked`,
-                                        `withdraw`,
-                                        `projectStatus`
-                                      )
-                SET(
-                        
-                        '{$projectName     }',
-                        '{$bookNo          }',
-                        '{$projectAt       }',
-                        '{$projectType     }', 
-                        '{$projectBudget   }',
-                        '{$budgetCheck     }',
-                        '{$principleApprove}',
-                        '{$processApprove  }',
-                        '{$tntCheck        }',
-                        '{$orderNo         }',
-                        '{$orderAt         }',
-                        '{$orderDelivery   }',
-                        '{$orderDeadline   }',
-                        '{$promiseNo       }',
-                        '{$promiseAt       }',
-                        '{$promiseDelivery }',
-                        '{$promiseDeadline }',
-                        '{$budgetBinding   }',
-                        '{$checked         }',
-                        '{$withdraw        }',
-                        '{$projectStatus   }'
-                    )";
+        $sql = "UPDATE `project`
+                SET     `projectName`           = '{$projectName     }'   ,
+                        `bookNo`                = '{$bookNo}'   ,
+                        `projectAt`             = '{$projectAt       }'   ,
+                        `projecttype_id`        = '{$projecttype_id  }'   ,
+                        `projectBudget`         = '{$projectBudget   }'   ,
+                        `budgetCheck`           = '{$budgetCheck     }'   ,
+                        `principleApprove`      = '{$principleApprove}'   ,
+                        `processApprove`        = '{$processApprove  }'   ,
+                        `tntCheck`              = '{$tntCheck        }'   ,
+                        `orderNo`               = '{$orderNo         }'   ,
+                        `orderAt`               = '{$orderAt         }'   ,
+                        `orderDelivery`         = '{$orderDelivery   }'   ,
+                        `orderDeadline`         = '{$orderDeadline   }'   ,
+                        `promiseNo`             = '{$promiseNo       }'   ,
+                        `promiseAt`             = '{$promiseAt       }'   ,
+                        `promiseDelivery`       = '{$promiseDelivery }'   ,
+                        `promiseDeadline`       = '{$promiseDeadline }'   ,
+                        `budgetBinding`         = '{$budgetBinding   }'   ,
+                        `checked`               = '{$checked         }'   ,
+                        `withdraw`              = '{$withdraw        }'   ,
+                        `projectStatus`         = '{$projectStatus   }'
+                WHERE project_id = '{$pid}'
+                ";
 
         if ($conn->query($sql) === TRUE) {
             return 1;

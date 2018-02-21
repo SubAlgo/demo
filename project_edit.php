@@ -65,11 +65,52 @@
             $withdraw           =   $_POST['withdraw'];
             $projectStatus      =   $_POST['projectStatus'];
 
-            $ap = addProject($conn,         $projectName,   $bookNo,            $projectAt,         $projecttype_id, 
+            //echo "{$projectName     }<br>"  ;
+            //echo "{$bookNo          }<br>" ;
+            //echo "{$projectAt       }<br>" ;
+            //echo "{$projecttype_id  }<br>" ;
+            //echo "{$projectBudget   }<br>" ;
+            //echo "{$budgetCheck     }<br>" ;
+            //echo "{$principleApprove}<br>" ;
+            //echo "{$processApprove  }<br>" ;
+            //echo "{$tntCheck        }<br>" ;
+            //echo "{$orderNo         }<br>" ;
+            //echo "{$orderAt         }<br>" ;
+            //echo "{$orderDelivery   }<br>" ;
+            //echo "{$orderDeadline   }<br>" ;
+            //echo "{$promiseNo       }<br>" ;
+            //echo "{$promiseAt       }<br>" ;
+            //echo "{$promiseDelivery }<br>" ;
+            //echo "{$promiseDeadline }<br>" ;
+            //echo "{$budgetBinding   }<br>" ;
+            //echo "{$checked         }<br>" ;
+            //echo "{$withdraw        }<br>" ;
+            //echo "{$projectStatus   }<br>" ;
+
+            $ap = editProject($conn,        $pid,           $projectName,       $bookNo,            $projectAt,         $projecttype_id, 
                             $projectBudget, $budgetCheck,   $principleApprove,  $processApprove, 
                             $tntCheck,      $orderNo,       $orderAt,           $orderDelivery,     $orderDeadline, 
                             $promiseNo ,    $promiseAt,     $promiseDelivery,   $promiseDeadline, 
                             $budgetBinding, $checked,       $withdraw,          $projectStatus);
+
+            if ($ap == 1 ) {
+                unset($_POST);
+                $_POST = array();
+                echo '<script language="javascript">';
+                echo "alert('แก้ไขโครงการเรียบร้อยแล้ว')";
+               
+                echo '</script>';
+                
+                
+            }   else {
+                echo '<script language="javascript">';
+                echo "alert('แก้ไขโครงการผิดพลาด !!!')";
+               
+                echo '</script>';
+            }
+            //refresh เพื่อ clear method post ให้เป็น get
+            header( "refresh: 1; url=//{$path}/project_edit.php?pid={$pid}" );
+            
         }
 
         //print_r($x);
@@ -155,7 +196,7 @@
                         <div class="fields">
                             <div class="eight wide field">
                                 <label>เลขที่หนังสือ</label>
-                                <input type="text" name="bookNo" id="bookNo" placeholder="ที่หนังสือ..." value="<?php $bookNo; ?>">
+                                <input type="text" name="bookNo" id="bookNo" placeholder="ที่หนังสือ..." value="<?php echo $bookNo; ?>">
                             </div>
                             <div class="eight wide field">
                                 <label>ลงวันที่ (ปี ค.ศ.)</label>
