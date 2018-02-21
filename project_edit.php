@@ -176,7 +176,8 @@
             <div class="ui container">
                 <div>
                     <form class="ui form" method="post">
-                        <h2 class="ui dividing header">แก้ไขข้อมูลโครงการ</h2>
+                        <div align="center"><h2 class="ui dividing header">แก้ไขข้อมูลโครงการ</h2></div>
+                        <p></p>
 
                         <!-- row1 -->
                         <!-- หน่วยเสนอความต้องการ -->

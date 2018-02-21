@@ -349,7 +349,7 @@
         return false;
     }
 
-
+    //function editProject
     function editProject($conn,         $pid,           $projectName,       $bookNo,            $projectAt,         $projecttype_id, 
                         $projectBudget, $budgetCheck,   $principleApprove,  $processApprove, 
                         $tntCheck,      $orderNo,       $orderAt,           $orderDelivery,     $orderDeadline, 
@@ -415,6 +415,16 @@
             return "Error: " . $sql . "<br>" . $conn->error;
         }
         $conn->close();
+    }
+
+    function delProject($conn, $pid) {
+        $sql = "DELETE FROM project WHERE project_id = '{$pid}'";
+
+        if ($conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

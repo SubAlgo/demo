@@ -193,9 +193,9 @@
                                         echo "<td colspan='2'> <div align='center'>" . condateFormate($row['orderDeadline']) . "</div> </td>";
                                         echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
                                         echo "<td colspan='2'> <div align='center'>" . formatBudget($row['projectbudget']) . "</div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> <a href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> <a href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> <a href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a class='ui button positive' href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a class='ui button blue' href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a class='ui button negative' href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
                                         echo "</tr>";
                                         $i++;
                                     }
@@ -248,9 +248,9 @@
                                         echo "<td colspan='2'> <div align='center'>". condateFormate($row['orderDeadline']) . "</div> </td>";
                                         echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
                                         echo "<td colspan='2'> <div align='center'> {$row['projectbudget']} </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> <a href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> <a href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
-                                        echo "<td colspan='2'> <div align='center'> <a href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a class='ui button positive' href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a class='ui button blue' href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> <a class='ui button negative' href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
                                         echo "</tr>";
                                         $i++;
                                     }
