@@ -222,8 +222,8 @@
                             </div>
 
                             <div class="four wide field">
-                                <label>กำหนดส่งมอง (วัน)</label>
-                                <input type="text" name="orderDelivery" id="orderDelivery" placeholder="กำหนดส่งมอบ">
+                                <label>กำหนดส่งมอบภายใน (วัน)</label>
+                                <input type="text" name="orderDelivery" id="orderDelivery" placeholder="กำหนดส่งมอบภายใน">
                             </div>
                         </div>
 
@@ -243,8 +243,8 @@
                             </div>
 
                             <div class="four wide field">
-                                <label>กำหนดส่งมอง (วัน)</label>
-                                <input type="text" name="promiseDelivery" id="promiseDelivery" placeholder="กำหนดส่งมอบ">
+                                <label>กำหนดส่งมอบภายใน (วัน)</label>
+                                <input type="text" name="promiseDelivery" id="promiseDelivery" placeholder="กำหนดส่งมอบภายใน">
                             </div>
                         </div>
 
@@ -301,13 +301,13 @@
                             
 
                         <?php
-                            $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
-                            //echo "Today is " . date("Y/m/d") . "<br>";
-                            $date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
-                            echo $date1->format('d-m-Y');
-                            echo "<br>";
-                            $date1->modify('+15 day');
-                            echo $date1->format('d-m-Y');
+                          // $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+                          // //echo "Today is " . date("Y/m/d") . "<br>";
+                          // $date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
+                          // echo $date1->format('d-m-Y');
+                          // echo "<br>";
+                          // $date1->modify('+15 day');
+                          // echo $date1->format('d-m-Y');
                         ?>
                      
                     </form>

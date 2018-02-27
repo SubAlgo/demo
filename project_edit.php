@@ -217,7 +217,7 @@
                         <!-- ประเภทงาน -->
                         <div class="fields">
                             <div class="eight wide field">
-                                <label>ปรเภทงาน</label>
+                                <label>ประเภทงาน</label>
                                 <select class="ui fluid search dropdown" name="projecttype_id">
                                     <option value="1" <?php if($projecttype_id == 1) {echo "selected";} ?> >งานซื้อ</option>
                                     <option value="2" <?php if($projecttype_id == 2) {echo "selected";} ?> >งานจ้าง</option>
@@ -317,8 +317,8 @@
                             </div>
 
                             <div class="four wide field">
-                                <label>กำหนดส่งมอง (วัน)</label>
-                                <input  type="text" name="orderDelivery" id="orderDelivery" placeholder="กำหนดส่งมอบ" 
+                                <label>กำหนดส่งมอบภายใน (วัน)</label>
+                                <input  type="text" name="orderDelivery" id="orderDelivery" placeholder="กำหนดส่งมอบภายใน" 
                                         value="<?php echo $orderDelivery; ?>"
                                 >
                             </div>
@@ -343,8 +343,8 @@
                             </div>
 
                             <div class="four wide field">
-                                <label>กำหนดส่งมอง (วัน)</label>
-                                <input  type="text" name="promiseDelivery" id="promiseDelivery" placeholder="กำหนดส่งมอบ"
+                                <label>กำหนดส่งมอบภายใน (วัน)</label>
+                                <input  type="text" name="promiseDelivery" id="promiseDelivery" placeholder="กำหนดส่งมอบภายใน"
                                         value="<?php echo $promiseDelivery; ?>">
                             </div>
                         </div>
@@ -417,13 +417,13 @@
                             
 
                         <?php
-                            $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
-                            //echo "Today is " . date("Y/m/d") . "<br>";
-                            $date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
-                            echo $date1->format('d-m-Y');
-                            echo "<br>";
-                            $date1->modify('+15 day');
-                            echo $date1->format('d-m-Y');
+                           // $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+                           // //echo "Today is " . date("Y/m/d") . "<br>";
+                           // $date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
+                           // echo $date1->format('d-m-Y');
+                           // echo "<br>";
+                           // $date1->modify('+15 day');
+                           // echo $date1->format('d-m-Y');
                         ?>
                      
                     </form>

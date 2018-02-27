@@ -427,6 +427,71 @@
         }
     }
 
+    //function แปลงรูปแบบการแสดงผลข้อมูล วัน/เดือน/ปี
+    function convertDate ($x) {
+        if($x == "0000-00-00") {
+            return "-";
+        }
+        $x = explode("-", $x);
+
+        $x[0] = $x[0] + 543;
+        $x[1] = intval($x[1]);
+        $x[2] = intval($x[2]);
+        
+
+        switch ($x[1]) {
+            case "1":
+                $x[1] = "มกราคม";
+                break;
+            case "2":
+                $x[1] = "กุมภาพันธ์";
+                break;
+            case "3":
+                $x[1] = "มีนาคม";
+                break;
+            case "4":
+                $x[1] = "เมษายน";
+                break;
+            case "5":
+                $x[1] = "พฤษภาคม";
+                break;
+            case "6":
+                $x[1] = "มีถุนาคม";
+                break;
+            case "7":
+                $x[1] = "กรกฎาคม";
+                break;
+            case "8":
+                $x[1] = "สิงหาคม";
+                break;
+            case "9":
+                $x[1] = "กันยายน";
+                break;
+            case "10":
+                $x[1] = "ตุลาคม";
+                break;
+            case "11":
+                $x[1] = "พฤศจิกายน";
+                break;
+            case "12":
+                $x[1] = "ธันวาคม";
+                break;
+        }
+
+        $result = $x[2] . " " . $x[1] . " พ.ศ. " . $x[0];
+        return $result; 
+        
+
+    }
+
+    function showemptyData ($x) {
+        if(strlen($x) == 0) {
+            $x= "-";
+        }
+
+        return $x;
+    }
+
 
 
 

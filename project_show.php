@@ -120,25 +120,44 @@
         $project_id         = $x['project_id'];
         $projectName        = $x['projectName'];
         $bookNo             = $x['bookNo'];
-        $projectAt          = $x['projectAt'];
+        $projectAt          = convertDate($x['projectAt']);
         $projecttype_id     = $x['projecttype_id'];
         $projectBudget      = $x['projectBudget'];
-        $budgetCheck        = $x['budgetCheck'];
-        $principleApprov    = $x['principleApprove'];
-        $processApprove     = $x['processApprove'];
-        $tntCheck           = $x['tntCheck'];
-        $orderNo            = $x['orderNo'];
-        $orderAt            = $x['orderAt'];
+        $budgetCheck        = convertDate($x['budgetCheck']);
+        $principleApprov    = convertDate($x['principleApprove']);
+        $processApprove     = convertDate($x['processApprove']);
+        $tntCheck           = convertDate($x['tntCheck']);
+        $orderNo            = showemptyData($x['orderNo']);
+        $orderAt            = convertDate($x['orderAt']);
         $orderDelivery      = $x['orderDelivery'];
-        $orderDeadline      = $x['orderDeadline'];
-        $promiseNo          = $x['promiseNo'];
-        $promiseAt          = $x['promiseAt'];
+        $orderDeadline      = convertDate($x['orderDeadline']);
+        $promiseNo          = showemptyData($x['promiseNo']);
+        $promiseAt          = convertDate($x['promiseAt']);
         $promiseDelivery    = $x['promiseDelivery'];
-        $promiseDeadline    = $x['promiseDeadline'];
-        $budgetBinding      = $x['budgetBinding'];
-        $checked            = $x['checked'];
-        $withdraw           = $x['withdraw'];
+        $promiseDeadline    = convertDate($x['promiseDeadline']);
+        $budgetBinding      = convertDate($x['budgetBinding']);
+        $checked            = convertDate($x['checked']);
+        $withdraw           = convertDate($x['withdraw']);
         $projectStatus      = $x['projectStatus'];
+
+        
+
+        
+
+        //แปลง $projecttype -> text
+        if($projecttype_id == 1) {
+            $projecttype = "งานซื้อ";
+        } else if ($projecttype_id == 2) {
+            $projecttype = "งานจ้าง";
+        }
+
+
+        //แปลง $projectStatus -> text
+        if($projectStatus == 1 ) {
+            $projectStatus = "อยู่ระหว่างดำเนินการ";
+        } else if ($projectStatus == 2) {
+            $projectStatus = "ดำเนินการเสร็จสิ้น";
+        }
 
 
         if($orderDelivery == 0) {
@@ -152,7 +171,7 @@
         
     ?>
 
-    <title>Edit_project</title>
+    <title>show_project</title>
     
 </head>
 <body>
@@ -175,93 +194,218 @@
         <div class="ui vertical stripe segment">
             <div class="ui container">
                 <div>
-                    <h4 class="ui horizontal divider header">
-                        
-                        แสดงรายการโครงการ
-                    </h4>
-                    <table class="ui definition table">
-                      <tbody>
-                        <tr>
-                            <td class="four wide column">หน่วยเสนอความต้องการ</td>
-                            <td><?php echo $projectName; ?></td>
-                        </tr>
-                        <tr>
-                            <td>เลขที่หนังสือ</td>
-                            <td>
-                                <div class="fields">
-                                    <div class="field"><?php echo $bookNo; ?></div>
-                                    <div class="field">[ลงวันที่ : <?php echo $projectAt; ?>]</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ประเภทงาน</td>
-                            <td><?php echo $projecttype_id; ?></td>
-                        </tr>
-                        <tr>
-                            <td>จำนวนเงินงบประมาณ</td>
-                            <td><?php echo $projectBudget; ?> บาท</td>
-                        </tr>
-                        <tr>
-                            <td>ตรวจสอบงบประมาณเมื่อ</td>
-                            <td><?php echo $budgetCheck; ?></td>
-                        </tr>
-                        <tr>
-                            <td>อนุมัติหลักการเมื่อ</td>
-                            <td><?php echo $principleApprov; ?></td>
-                        </tr>
-                        <tr>
-                            <td>อนุมัติ ซื้อ-จ้าง </td>
-                            <td><?php echo $processApprove; ?></td>
-                        </tr>
-                        <tr>
-                            <td>ตรวจร่าง นธน.ฯ เมื่อ</td>
-                            <td><?php echo $tntCheck; ?></td>
-                        </tr>
-                        <tr>
-                            <td>เลขที่ใบสั่งซื้อ - สั่งจ้าง</td>
-                            <td><?php echo $orderNo; ?></td>
-                        </tr>
-                        <tr>
-                            <td>วันที่ลงบันทึก ใบสั่งซื้อ - สั่งจ้าง</td>
-                            <td><?php echo $orderAt; ?></td>
-                        </tr>
-                        <tr>
-                            <td>กำหนดส่งมอบ ตามใบสั่งซื้อ - สั่งจ้าง</td>
-                            <td><?php echo $orderDeadline; ?></td>
-                        </tr>
-                        
-                        <tr>
-                            <td>เลขที่สัญญาซื้อ - สั่งจ้าง</td>
-                            <td><?php echo $promiseNo; ?></td>
-                        </tr>
-                        <tr>
-                            <td>วันที่ลงบันทึก สัญญาซื้อ - สั่งจ้าง</td>
-                            <td><?php echo $promiseAt; ?></td>
-                        </tr>
-                        <tr>
-                            <td>กำหนดส่งมอบ ตามสัญญาซื้อ - สั่งจ้าง</td>
-                            <td><?php echo $promiseDeadline; ?></td>
-                        </tr>
+                    <form class="ui form" method="post">
+                        <div align="center"><h2 class="ui dividing header">ข้อมูลโครงการ</h2></div>
+                        <p></p>
 
-                        <tr>
-                            <td>ผูกพันงบประมาณเมื่อ</td>
-                            <td><?php echo $budgetBinding; ?></td>
-                        </tr>
-                        <tr>
-                            <td>ตรวจรับเมื่อ</td>
-                            <td><?php echo $checked; ?></td>
-                        </tr>
-                        <tr>
-                            <td>ส่งขอเบิกเงินเมื่อ</td>
-                            <td><?php echo $withdraw; ?></td>
-                        </tr>
-                        <tr>
-                            <td>สถานะโครงการ</td>
-                            <td><?php echo $projectStatus; ?></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                        <!-- row1 -->
+                        <!-- หน่วยเสนอความต้องการ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>หน่วยเสนอความต้องการ</h3></label>
+                                
+                                <label><h4><?php echo $projectName; ?></h4></label>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row2 -->
+                       <!-- เลขที่หนังสือ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>เลขที่หนังสือ</h3></label>
+                                <label><h4><?php echo $bookNo; ?></h4></label>
+                            </div>
+                            <div class="eight wide field">
+                                <label><h3>ลงวันที่</h3></label>
+                                <label><h4><?php echo $projectAt; ?></h4></label>                                  
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row3 -->
+                        <!-- ประเภทงาน -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>ประเภทงาน</h3></label>
+                                <div>
+                                    <label><h4><?php echo $projecttype; ?></h4></label>
+                                </div>
+                                  
+
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row4 -->
+                        <!-- งบประมาณ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>จำนวนเงินงบประมาณ</h3></label>
+                                <label><h4><?php echo $projectBudget; ?></h4></label>
+                            </div>
+                            <div class="eight wide field">
+                                <label><h3>ตรวจสอบงบประมาณเมื่อ</h4></label>
+                                
+                                <label ><h4><?php echo $budgetCheck; ?></h4></label>
+                                                                 
+                                
+                            </div>
+                        </div>
+
+                        <hr>
+                        <!-- row5 -->
+                        <!-- อนุมัติหลักการ -->
+                        <div class="fields">  
+                            <div class="eight wide field">
+                                <label><h3>อนุมัติหลักการเมื่อ</h3></label>
+                                <label><h4><?php echo $principleApprov; ?></h4></label>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row6 -->
+                        <!-- อนุมัติ ซื้อ-จ้าง เมื่อ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>อนุมัติ ซื้อ-จ้าง </h3></label>
+                                
+                                <label><h4><?php echo $processApprove; ?></h4></label>
+                                
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row7 -->
+                        <!-- ตรวจร่าง นธน.ฯ เมื่อ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>ตรวจร่าง นธน.ฯ เมื่อ :</h3></label>
+                                
+                                <label><h4><?php echo $tntCheck; ?></h4></label>
+                                
+                            </div>
+                            
+                        </div>
+
+
+                        <hr>
+                        <!-- row8 -->
+                        <!-- ใบสั่งซื้อ - สั่งจ้าง ที่ -->
+                        <div class="fields">
+                            <div class="four wide field">
+                                <label><h3>ใบสั่งซื้อ - สั่งจ้าง ที่</h3></label>
+                                <label><h4><?php echo $orderNo; ?></h4></label>
+                            </div>
+
+                            <div class="eight wide field">
+                                <label><h3>ลงวันที่ </h3></label>
+                                <label><h4><?php echo $orderAt; ?></h4></label>
+                            </div>
+
+                            <div class="four wide field">
+                                <label><h3>กำหนดส่งมอบภายใน</h3></label>
+                                <label><h4><?php echo "{$orderDeadline} (ระยะเวลา {$orderDelivery} วัน)"; ?></h4></label>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row9 -->
+                        <!-- สัญญาซื้อ - สั่งจ้าง ที่ -->
+                        <div class="fields">
+                            <div class="four wide field">
+                                <label><h3>สัญญาซื้อ - สั่งจ้าง ที่</h3></label>
+                                <label><h4><?php echo $promiseNo; ?></h4></label>
+                            </div>
+
+                            <div class="eight wide field">
+                                <label><h3>ลงวันที่ </h3></label>
+                                <label><h4><?php echo $promiseAt; ?></h4></label>
+                                                       
+                            </div>
+
+                            <div class="four wide field">
+                                <label><h3>กำหนดส่งมอบภายใน</h3></label>
+                                <label><h4><?php echo "{$promiseDeadline} (ระยะเวลา {$promiseDelivery} วัน)"; ?></h4></label>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row10 -->
+                        <!-- ผูกพันงบประมาณ -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>ผูกพันงบประมาณเมื่อ </h3></label>
+                                <label><h4><?php echo $budgetBinding; ?></h4></label>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <!-- row11 -->
+                        <!-- ตรวจรับ เมื่อ: -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>ตรวจรับเมื่อ </h3></label>
+                                <label><h4><?php echo $checked; ?></h4></label>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <!-- row12 -->
+                        <!-- ส่งขอเบิกเงิน เมื่อ: -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>ส่งขอเบิกเงินเมื่อ</h3></label>
+                                 <label><h4><?php echo $withdraw; ?></h4></label>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <!-- row13 -->
+                        <!-- สถานะโครงการ : -->
+                        <div class="fields">
+                            <div class="eight wide field">
+                                <label><h3>สถานะโครงการ</h3></label>
+                                <label><h4><?php echo $projectStatus; ?></h4></label>
+                                
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        
+                       
+
+                        
+
+
+
+                            
+                            
+                            
+
+                            
+                            
+
+                        <?php
+                            //$tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+                            ////echo "Today is " . date("Y/m/d") . "<br>";
+                            //$date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
+                            //echo $date1->format('d-m-Y');
+                            //echo "<br>";
+                            //$date1->modify('+15 day');
+                            //echo $date1->format('d-m-Y');
+                        ?>
+                     
+                    </form>
                 </div>
             </div>
         </div>
