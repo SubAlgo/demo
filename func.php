@@ -15,11 +15,11 @@
                     die();
                     break;
                 case 2:
-                    header("Location: http://localhost/demo/superuser.php");
+                    header("Location: http://localhost/demo/user.php");
                     die();
                     break;
                 case 3:
-                    header("Location: http://localhost/demo/user.php");
+                    header("Location: http://localhost/demo/superuser.php");
                     die();
                     break;
                 default:
@@ -28,6 +28,16 @@
                     break;
             }
         }
+    }
+
+    function show_nav($path) {
+        if($_SESSION['permission'] == 1) {
+            include_once "./layout/admin_nav.php";
+        } else if ($_SESSION['permission'] == 2) {
+            include_once "./layout/user_nav.php";
+        } else if ($_SESSION['permission'] == 3) {
+            include_once "./layout/superuser_nav.php";
+        }   
     }
 
     // function countAlluser()

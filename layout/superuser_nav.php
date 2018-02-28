@@ -1,22 +1,20 @@
-<?php
-  include_once 'inc.php';
-?>
-
-
-<nav>
-  <ul>
+<div class="ui menu">
+    <a href="superuser.php" class="item"><b>หน้าหลัก Super user</b></a>
     
-    <?php
-      //echo "<li><a href='http://localhost/pj_army/user_management.php'>จัดการผู้ใช้</a></li>"
-      //echo "<li><font color='blue'><b><a href='//{$path}/user_management.php'>จัดการผู้ใช้</a></b></font></li>";
-      //echo "<hr>";
-      echo "<li><font color='green'><b><a href='//{$path}/project_management.php'>จัดการรายการ/โครงการ</a></b></font></li>";
-      echo "<hr>";
-      echo "<li><font color='red'><b><a href='//{$path}/logout.php'>Logout</a></b></font></li>";
+    <div class="right menu">
 
-    ?>
-    <hr>
-    
-    
-  </ul>
-</nav>
+      <div class="item">
+          <div class="item">
+              <b>ผู้ใช้ระบบ :</b><?php echo "{$_SESSION['titlename']} {$_SESSION['user_name']} {$_SESSION['user_surname']}"; ?>
+          </div>
+              
+          <div class="item">
+              <b>ระดับสิทธิ์ :</b> <?php echo $_SESSION['permission_title']; ?>
+          </div>
+
+          <div >
+              <a href="//<?php echo $path; ?>/logout.php" class="ui button negative">ออกจากระบบ</a>
+          </div>
+      </div>
+    </div>
+</div>

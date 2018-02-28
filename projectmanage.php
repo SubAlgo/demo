@@ -17,7 +17,8 @@
     
     <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
     <?php
-        include_once "./check_admin.php";
+        //include_once "./check_admin.php";
+        adminANDuser();
     ?>
 
     <!-- SETTING DATA -->
@@ -96,7 +97,8 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/admin_nav.php";
+            //include_once "./layout/admin_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
 

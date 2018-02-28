@@ -1,5 +1,6 @@
 <div class="ui menu">
-    <a href="user.php" class="item"><b>หน้าหลัก user</b></a>
+    <a href="admin.php" class="item"><b>หน้าหลัก USER</b></a>
+    <a href="projectmanage.php"class="item"><b>จัดการโครงการ/รายการ</b></a>
     <div class="right menu">
 
       <div class="item">
@@ -11,7 +12,7 @@
               <b>ระดับสิทธิ์ :</b> <?php echo $_SESSION['permission_title']; ?>
           </div>
 
-          <div >
+          <div>
               <a href="//<?php echo $path; ?>/logout.php" class="ui button negative">ออกจากระบบ</a>
           </div>
       </div>
