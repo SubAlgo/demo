@@ -15,6 +15,11 @@
         }
     ?>
 
+    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
+    <?php
+        adminOnly();
+    ?>
+
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
@@ -77,7 +82,8 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/admin_nav.php";
+            //include_once "./layout/admin_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
     

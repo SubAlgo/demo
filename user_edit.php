@@ -7,6 +7,19 @@
 
     <?php include_once 'inc.php' ?>
 
+    <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
+    <?php
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: //{$path}/index.php");
+            die();
+        }
+    ?>
+
+    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
+    <?php
+        adminOnly();
+    ?>
+
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
@@ -67,7 +80,8 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/admin_nav.php";
+            //include_once "./layout/admin_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
 

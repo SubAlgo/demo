@@ -7,6 +7,19 @@
 
     <?php include_once 'inc.php' ?>
 
+    <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
+    <?php
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: //{$path}/index.php");
+            die();
+        }
+    ?>
+
+    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
+    <?php
+        adminOnly();
+    ?>
+
     <!-- script -->
     
 
@@ -54,7 +67,8 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/admin_nav.php";
+            //include_once "./layout/admin_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
 
@@ -63,7 +77,7 @@
             <div class="ui container">
                 <div align="center">
                     
-                    <form name="myForm" action="" onclick="return askFunction()" method="post">
+                    <form name="myForm" action=""  method="post">
                         <table class="ui collapsing table">
                         <thead>
                             <tr>
@@ -136,7 +150,10 @@
 
                             <tr>
                                 <td colspan="3" class="center aligned collapsing">
-                                    <input class="ui button negative" type="submit" name="submit" id="submit" value="DELETE">
+                                    <div>
+                                        <input class="ui button negative" onclick="return askFunction()" type="submit" name="submit" id="submit" value="DELETE">
+                                    </div>
+                                    
                                 </td>
                             </tr>
                         

@@ -17,8 +17,7 @@
     
     <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
     <?php
-        //include_once "./check_admin.php";
-        userOnly();
+        suOnly();
     ?>
     
 
