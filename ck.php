@@ -38,4 +38,11 @@
         }
     }
 
+    function suOnly() {
+        ckPermission();
+        if($_SESSION['permission'] != 3) {
+            redir();
+        }
+    }
+
 ?>
