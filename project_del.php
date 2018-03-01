@@ -15,9 +15,10 @@
         }
     ?>
     
-    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
+
+    <!-- Check permission access -->
     <?php
-        include_once "./check_admin.php";
+        adminANDuser();
     ?>
 
     <!-- SETTING DATA -->
@@ -133,7 +134,7 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/admin_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
 
@@ -384,13 +385,13 @@
                             
 
                         <?php
-                            $tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
-                            //echo "Today is " . date("Y/m/d") . "<br>";
-                            $date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
-                            echo $date1->format('d-m-Y');
-                            echo "<br>";
-                            $date1->modify('+15 day');
-                            echo $date1->format('d-m-Y');
+                            //$tomorrow  = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+                            ////echo "Today is " . date("Y/m/d") . "<br>";
+                            //$date1 = DateTime::createFromFormat('d-m-Y', '04-1-2533');
+                            //echo $date1->format('d-m-Y');
+                            //echo "<br>";
+                            //$date1->modify('+15 day');
+                            //echo $date1->format('d-m-Y');
                         ?>
                      
                     </form>

@@ -15,9 +15,8 @@
         }
     ?>
     
-    <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
+    <!-- CHECK PERMISSION [USER] ACCESS [If not USER , Will redirect ot page by permission] -->
     <?php
-        //include_once "./check_admin.php";
         userOnly();
     ?>
     
@@ -60,7 +59,7 @@
         
     ?>
 
-    <title>หน้าหลัก</title>
+    <title>หน้าหลัก USER</title>
     
 </head>
 <body>
@@ -75,7 +74,8 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/user_nav.php";
+            //include_once "./layout/user_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
 
