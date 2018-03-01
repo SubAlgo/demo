@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <?php include_once 'inc.php'; ?>
+    <?php include_once 'inc.php' ?>
 
     <!-- CHECK LOGGED IN [If logged in , Will redirect ot login page] -->
     <?php
@@ -17,49 +17,72 @@
     
     <!-- CHECK PERMISSION [ADMIN] ACCESS [If not admin , Will redirect ot page by permission] -->
     <?php
+        //include_once "./check_admin.php";
         suOnly();
     ?>
-    
 
     <!-- SETTING DATA -->
     <?php
         /*----- SETTING DATA -----*/
-        $alluser = countAlluser($conn);
-        $adminuser = countUser($conn, 1);
-        $other_user = countUser($conn, 2);
-        $super_user = countUser($conn, 3);
 
-        //------------------------โครงการระหว่างดำเนินงาน-----------------------
-        $projectInprocessAll = "SELECT COUNT(projectName) as returnVal FROM project WHERE projectStatus = '1'";
-        $projectInprocessAll = countProject($conn, $projectInprocessAll);
-
-        $projectInprocessBuy = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '1' && projectStatus = '1'";
-        $projectInprocessBuy = countProject($conn, $projectInprocessBuy);
-
-        $projectInprocessHire = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '2' && projectStatus = '1'";
-        $projectInprocessHire = countProject($conn, $projectInprocessHire);
-
-        $projectInprocessBudget = "SELECT SUM(projectbudget) as returnVal FROM project WHERE projectStatus = '1'";
-        $projectInprocessBudget = countProject($conn, $projectInprocessBudget);
-
-        //------------------------โครงการดำเนินงานเสร็จสิ้น-----------------------
-        $projectSuccessAll = "SELECT COUNT(projectName) as returnVal FROM project WHERE projectStatus = '2'";
-        $projectSuccessAll = countProject($conn, $projectSuccessAll);
-        
-        $projectSuccessBuy = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '1' && projectStatus = '2'";
-        $projectSuccessBuy = countProject($conn, $projectSuccessBuy);
-
-        $projectSuccessHire = "SELECT COUNT(projectName) as returnVal FROM project WHERE projecttype_id = '2' && projectStatus = '2'";
-        $projectSuccessHire= countProject($conn, $projectSuccessHire);
-
-        $projectSuccessBudget = "SELECT SUM(projectbudget) as returnVal FROM project WHERE projectStatus = '2'";
-        $projectSuccessBudget = countProject($conn, $projectSuccessBudget);
+        /*  ---------------p Value ---------------------------------
+            p คือ ค่าที่จะใช้ในการกำหนดว่า จะ get value ของ projectType ไหน
+            ถ้า p = 1 จะ select ข้อมูลโปรเจค ประเภท "โครงการซื้อ"
+            ถ้า p = 2 จะ select ข้อมูลโปรเจค ประเภท "โครงการจ้าง"*/
+        $p = 1;
+        if (isset($_GET['u']) ) {
+            $p = $_GET['u'];
+        }
 
 
-        
+        //SELECT SUM งบประมาณโครงการตาม projectType และ projectStatus
+        function getSum($conn, $p, $proStatus) {
+            $sqlsum = " SELECT SUM(projectbudget) as budget 
+                        FROM project 
+                        WHERE projecttype_id = '{$p}' && projectStatus = '{$proStatus}' ";
+            $projectbudget = $conn->query($sqlsum);
+            if ($projectbudget->num_rows > 0) {
+                while($row = $projectbudget->fetch_assoc()) {
+                    $budget = $row['budget'];
+                    return $budget;
+                }
+            }
+        }
+
+         //SELECT SUM งบประมาณโครงการทั้งหมดตาม projectType
+        function getSumAll($conn, $p) {
+            $sqlsum = "SELECT SUM(projectbudget) as budget FROM project WHERE projecttype_id = '{$p}' ";
+            $projectbudget = $conn->query($sqlsum);
+            if ($projectbudget->num_rows > 0) {
+                while($row = $projectbudget->fetch_assoc()) {
+                    $budget = $row['budget'];
+                    return $budget;
+                }
+            }
+        }
+
+        //ปรับ Format การแสดงผลของ วัน-เดือน-ปี
+        function condateFormate($x) {
+            if($x == "0000-00-00" || strlen($x)== 0) {
+                return "-";
+            }
+
+            $xx = explode("-", $x);
+            $date1 = DateTime::createFromFormat('Y-m-d', $x);
+            $date1->modify('+543 year');
+            return $date1->format('d-m-Y');
+        }
+
+        //ปรับ Format การแสดงผลของ งบประมาณ
+        function formatBudget($x) {
+            if($x == 0 || strlen($x) == 0) {
+                return '-';
+            }
+            return $x;
+        }
     ?>
 
-    <title>หน้าหลัก</title>
+    <title>จัดการโครงการ</title>
     
 </head>
 <body>
@@ -74,89 +97,179 @@
 
     <!-- NAV BAR -->
         <?php
-            include_once "./layout/superuser_nav.php";
+            //include_once "./layout/admin_nav.php";
+            show_nav($path);
         ?>
     <!-- NAV BAR -->
 
     <!-- BODY -->
         <div class="ui vertical stripe segment">
             <div class="ui container">
-                <!-- รายงานภาพรวมผู้ใช้ -->
-                <table class="ui table">
-                    <tr>
-                        <th align="center" colspan="2"><h3>รายงานภาพรวมผู้ใช้</h3></td> 
-                    </tr>
-                    <tr>
-                        <td>จำนวนผู้ใช้ทั้งหมด</td>
-                        <td> <?php echo $alluser; ?> คน</td>
-                    </tr>
-                    <tr>
-                        <td>จำนวนผู้ใช้ระดับ <b><u>[ADMIN]</u></b> </td>
-                        <td> <?php echo $adminuser; ?> คน</td>
-                    </tr>
-                    <tr>
-                        <td>จำนวนผู้ใช้ระดับ <b><u>[SUPER USER]</u></b> </td>
-                        <td> <?php echo $super_user; ?> คน</td>
-                    </tr>
-                    <tr>
-                        <td>จำนวนผู้ใช้ระดับ <b><u>[USER]</u></b>  </td>
-                        <td> <?php echo $other_user; ?> คน</td>
-                    </tr>
-                </table>
-
-
-                <!-- รายงานภาพรวมโครงการ  (ระหว่างดำเนินการ) -->
-                <table class="ui table">
-                    <tr>
-                        <th align="center" colspan="2"><h3>รายงานภาพรวมโครงการ</h3></td> 
-                    </tr>
-                    <tr>
-                        <td colspan="2"><h3>รายงานภาพรวมโครงการ (ระหว่างดำเนินการ)</h3></td> 
-                    </tr>
-                    <tr>
-                        <td> โครงการทั้งหมด (ระหว่างดำเนินการ)</td>
-                        <td > <div align="center"> <?php echo $projectInprocessAll; ?> โครงการ </div> </td>
-                    </tr>
-                    <tr>
-                        <td>โครงการจัดซื้อ (ระหว่างดำเนินการ)</td>
-                        <td> <div align="center"> <?php echo $projectInprocessBuy; ?> โครงการ </div></td>
-                    </tr>
-                    <tr>
-                        <td>โครงการจัดจ้าง (ระหว่างดำเนินการ)</td>
-                        <td> <div align="center"> <?php echo $projectInprocessHire; ?> โครงการ </div></td>
-                    </tr>
-                    <tr>
-                        <td>ยอดรวมงบประมาณ (ระหว่างดำเนินการ)</td>
-                        <td> <div align="center"> <?php echo $projectInprocessBudget; ?> บาท </div></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2"><h3>รายงานภาพรวมโครงการ (ดำเนินการเสร็จสิ้น)</h3></td> 
-                    </tr>
-                    <tr>
-                        <td> โครงการทั้งหมด (ดำเนินการเสร็จสิ้น)</td>
-                        <td > <div align="center"> <?php echo $projectSuccessAll; ?> โครงการ </div> </td>
-                    </tr>
-                    <tr>
-                        <td>โครงการจัดซื้อ (ดำเนินการเสร็จสิ้น)</td>
-                        <td> <div align="center"> <?php echo $projectSuccessBuy; ?> โครงการ </div></td>
-                    </tr>
-                    <tr>
-                        <td>โครงการจัดจ้าง (ดำเนินการเสร็จสิ้น)</td>
-                        <td> <div align="center"> <?php echo $projectSuccessHire; ?> โครงการ </div></td>
-                    </tr>
-                    <tr>
-                        <td>ยอดรวมงบประมาณ (ดำเนินการเสร็จสิ้น)</td>
-                        <td> <div align="center"> <?php echo $projectSuccessBudget; ?> บาท </div></td>
-                    </tr>
-                </table>
                 
+                <div>
+                    
+                </div>
+                <br>
+
+                <div>
+                    <a href="./superuser.php?u=1" class="ui labeled icon button blue">
+                        <i class="right search icon"></i>
+                        โครงการซื้อ
+                    </a>
+                    <a href="./superuser.php?u=2" class="ui labeled icon button blue">
+                        <i class="right search icon"></i>
+                        โครงการจ้าง
+                    </a>
+                    <a href="./superuser.php?u=2" class="ui labeled icon button blue">
+                        <i class="right search icon"></i>
+                        ค้นหาตามกำหนดส่งมอบ
+                    </a>
+                    <a href="./superuser.php?u=2" class="ui labeled icon button blue">
+                        <i class="right search icon"></i>
+                        ค้นหาตามกำหนดสัญญา
+                    </a>    
+                   <?php
+                        
+                        
+                   ?>
+                    
+                    <div align="center">
+                    <p>
+                        <h2>
+                            <?php 
+                                if($p == 1) {
+                                    echo "โครงการซื้อ";
+                                } else {
+                                    echo "โครงการจ้าง";
+                                }
+                            ?>
+                        </h2>
+                    </div>
+                    
+                    <div align="right">
+                        <h4>งบประมาณรวม: <?php echo getSumAll($conn, $p); ?> บาท</h4>
+                    </div>
+
+                    <div>
+                        <h3>ระหว่างดำเนินการ [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 1)); ?> บาท]</h3>
+                    </div>
+
+                    <table class="ui sixty column celled table">
+                        <thead>
+                            <tr>
+                                <th> <div align="center"> ลำดับ</th>
+                                <th colspan='4'> <div align="center"> รายการโครงการ </div> </th>
+                                <th colspan='2'> <div align="center"> กำหนดส่งมอบ </div> </th>
+                                <th colspan='2'> <div align="center"> กำหนดสัญญา </div> </th>
+                                <th colspan='2'> <div align="center"> งบประมาณ </div> </th>
+                                <th colspan='6'> <div align="center"> แสดง </div> </th>
+                               
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                                $sql = "SELECT  project_id, projectName, orderDeadline, promiseDeadline, projectbudget 
+                                        FROM    project 
+                                        WHERE   projecttype_id = '{$p}' && projectStatus = '1'";
+                                $result = $conn->query($sql);
+                            
+                                if ($result->num_rows > 0) {
+                                    $i = 1;
+                                    while($row = $result->fetch_assoc()) {
+                                        //projectName, orderDeadline, promiseDeadline, budget
+                                        $d = condateFormate($row['orderDeadline']);
+                                        if(strlen($row['promiseDeadline'])>0){
+                                            $d2 = condateFormate($row['promiseDeadline']);
+                                        } else {
+                                            $d2 = "-";
+                                        }
+                                        
+                                        echo "<tr>";
+                                        echo "<td> <div align='center'> {$i} </td>";
+                                        echo "<td colspan='4'> <div align='center'> {$row['projectName']} </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . condateFormate($row['orderDeadline']) . "</div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . formatBudget($row['projectbudget']) . "</div> </td>";
+                                        echo "<td colspan='6'> <div align='center'> <a class='ui button positive' href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
+                                        //echo "<td colspan='2'> <div align='center'> <a class='ui button blue' href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
+                                        //echo "<td colspan='2'> <div align='center'> <a class='ui button negative' href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
+                                        echo "</tr>";
+                                        $i++;
+                                    }
+                                }
+                                
+                            ?>
+                            
+                        </tbody>
+                    </table>
+                    
+                    <div>
+                        <h3>ดำเนินการเสร็จสิ้น [งบประมาณ: <?php echo formatBudget(getSum($conn, $p, 2)); ?> บาท]</h3>
+                    </div>
+                    
+                    <table class="ui sixty column celled table">
+                        <thead>
+                            <tr>
+                                <th> <div align="center"> ลำดับ</th>
+                                <th colspan='4'> <div align="center"> รายการโครงการ </div> </th>
+                                <th colspan='2'> <div align="center"> กำหนดส่งมอบ </div> </th>
+                                <th colspan='2'> <div align="center"> กำหนดสัญญา </div> </th>
+                                <th colspan='2'> <div align="center"> งบประมาณ </div> </th>
+                                <th colspan='6'> <div align="center"> แสดง </div> </th>
+                                
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                                $sql = "SELECT  project_id, projectName, orderDeadline, promiseDeadline, projectbudget 
+                                        FROM    project 
+                                        WHERE   projecttype_id = '{$p}' && projectStatus = '2'";
+                                $result = $conn->query($sql);
+                            
+                                if ($result->num_rows > 0) {
+                                    $i = 1;
+                                    while($row = $result->fetch_assoc()) {
+                                        //projectName, orderDeadline, promiseDeadline, budget
+                                        $d = condateFormate($row['orderDeadline']);
+                                        if(strlen($row['promiseDeadline'])>0){
+                                            $d2 = condateFormate($row['promiseDeadline']);
+                                        } else {
+                                            $d2 = "-";
+                                        }
+                                        
+                                        echo "<tr>";
+                                        echo "<td> <div align='center'> {$i} </td>";
+                                        echo "<td colspan='4'> <div align='center'> {$row['projectName']} </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>". condateFormate($row['orderDeadline']) . "</div> </td>";
+                                        echo "<td colspan='2'> <div align='center'>" . condateFormate($row['promiseDeadline']) . " </div> </td>";
+                                        echo "<td colspan='2'> <div align='center'> {$row['projectbudget']} </div> </td>";
+                                        echo "<td colspan='6'> <div align='center'> <a class='ui button positive' href='project_show.php?pid={$row['project_id']}'>แสดง</a> </div> </td>";
+                                        //echo "<td colspan='2'> <div align='center'> <a class='ui button blue' href='project_edit.php?pid={$row['project_id']}'>แก้ไข</a> </div> </td>";
+                                        //echo "<td colspan='2'> <div align='center'> <a class='ui button negative' href='project_del.php?pid={$row['project_id']}'>ลบ</a> </div> </td>";
+                                        echo "</tr>";
+                                        $i++;
+                                    }
+                                }
+                                
+                            ?>
+                            
+                        </tbody>    
+                   </table>
+                </div>
+                <br>
+                
+
+
+
             </div>
         </div>
     <!-- BODY -->
 
     <!-- FOOTER -->
         <?php
+            $conn->close();
             include_once "./layout/foot.php";
         ?>
     <!-- FOOTER -->
