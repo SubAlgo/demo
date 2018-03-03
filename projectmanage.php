@@ -123,6 +123,7 @@
                         <i class="right search icon"></i>
                         โครงการจ้าง
                     </a>
+                    <!--
                     <a href="./projectmanage.php?u=2" class="ui labeled icon button blue">
                         <i class="right search icon"></i>
                         ค้นหาตามกำหนดส่งมอบ
@@ -130,7 +131,8 @@
                     <a href="./projectmanage.php?u=2" class="ui labeled icon button blue">
                         <i class="right search icon"></i>
                         ค้นหาตามกำหนดสัญญา
-                    </a>    
+                    </a>
+                    -->
                    <?php
                         
                         
